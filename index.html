@@ -81,11 +81,6 @@ header{position:sticky;top:0;z-index:60;background:rgba(11,11,14,.95);backdrop-f
 .phase.q{cursor:pointer}
 .phase.q:after{content:'  Tap for the block plan';color:var(--purple);font-weight:700}
 .phase.q:active{border-color:var(--purple)}
-.nxt{margin:11px 17px 0;padding:9px 12px;border-radius:10px;background:rgba(94,147,196,.09);
- border:1px solid rgba(94,147,196,.26);font-size:12.5px;color:var(--dim);line-height:1.4}
-.nxt b{color:var(--purple)}
-.nxt.hold b{color:var(--amber)}
-.nxt.dl b{color:var(--amber)}
 .wkcard{margin:14px 16px 0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 17px}
 .wkcard h5{font-size:14px;font-weight:800;letter-spacing:-.01em;margin-bottom:3px;color:var(--w)}
 .wkcard .sub{font-size:12px;color:var(--faint);margin-bottom:11px}
@@ -228,11 +223,12 @@ details.coach summary::-webkit-details-marker{display:none}
 details.coach summary::after{content:" +";color:var(--purple)}
 details.coach[open] summary::after{content:" −"}
 .cn{font-size:14.5px;color:var(--dim);line-height:1.5;margin-top:11px}
-.mf{display:flex;gap:9px;margin-top:10px}
-.mf > div{flex:1;background:var(--ink);border-radius:10px;padding:10px 11px}
-.mf .t{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;font-weight:800}
-.mf .miss .t{color:var(--rest)}.mf .fix .t{color:var(--teal)}
-.mf .x{font-size:13px;color:var(--dim);line-height:1.4}
+.tips{margin-top:11px;background:var(--ink);border-radius:10px;padding:12px 13px}
+.tips .t{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;font-weight:800;color:var(--teal)}
+.tips ul{margin:0;padding-left:17px}
+.tips li{font-size:13.5px;color:var(--dim);line-height:1.45;margin-bottom:5px}
+.tips li::marker{color:var(--purple)}
+.tips li:last-child{margin-bottom:0}
 
 /* ---------- bottom ---------- */
 .bot{position:fixed;bottom:0;left:0;right:0;background:rgba(11,11,15,.97);backdrop-filter:blur(16px);
@@ -397,100 +393,101 @@ const PROG=[
   tempo:'2-0-X',rir:'2',inc:2.5,sets:[{l:'TOP',r:'5',rest:180},{l:'1',r:'8',rest:150},{l:'2',r:'8',rest:150},{l:'3',r:'8',rest:150}],
   rule:'Top set hits 5 clean twice → +2.5kg next week',
   note:'If bar speed drops noticeably before your last rep, rack it at 2 RIR. Grinding a 6th rep adds fatigue, not muscle, in a deficit.',
-  miss:'Knees caving on the drive out of the hole.',fix:"Cue 'spread the floor' — screw both feet outward into the ground without moving them."},
+  tips:['Feet shoulder-width, toes out 15–30°','Brace your abs hard before you unrack','Chest up, bar over mid-foot the whole way','Knees track over the toes, push them out','Hips and chest rise together out of the hole']},
  {id:'rdl',n:'Romanian Deadlift',a:'ham',p:'Hamstrings',s:'Glutes, erectors',sch:'Straight sets',
   tempo:'3-1-1',rir:'2',inc:2.5,sets:[{l:'1',r:'8',rest:120},{l:'2',r:'8',rest:120},{l:'3',r:'8',rest:120}],
   rule:'All 3 sets at 8 with a flat back → +2.5kg',
   note:'This is a stretch exercise, not a lifting exercise. The set ends when your hamstrings stop lengthening and your lower back starts rounding — regardless of the rep count.',
-  miss:'Turning it into a stiff-leg deadlift by bending at the spine instead of the hips.',fix:'Push your hips back toward the wall behind you and keep the bar dragging along your thighs the whole way down.'},
+  tips:['Soft knees, then push the hips back','Bar stays touching your thighs','Flat back, chest proud, shoulders down','Stop when the hamstrings stop stretching']},
  {id:'nordic',n:'Nordic Hamstring Curl',a:'ham',p:'Hamstrings',s:'Eccentric strength',sch:'Straight sets',bw:1,wk:3,
   tempo:'slow-0-assist',rir:'1',sets:[{l:'1',r:'5',rest:90},{l:'2',r:'5',rest:90}],
   rule:'Slow the descent by 1s each week before adding reps',
   note:'Enters in week 3. Strongest evidence base of any exercise for preventing hamstring strains. Deliberately on Monday, not Thursday — Nordics produce 48-hour soreness and Thursday sits 48 hours before padel. On Nordic weeks, drop the Bulgarian split squat to 2 sets to hold the session at 70 minutes.',
-  miss:'Dropping fast through the middle then catching yourself with your hands.',fix:'Fight for control through the whole range. If you can only resist the first 30°, use a band and build the range over weeks.'},
+  tips:['Knees padded, ankles anchored under something solid','Hips locked straight, glutes squeezed','Lower as slowly as you can control','Push off the floor with your hands to return']},
  {id:'bulg',n:'Bulgarian Split Squat',a:'quad',p:'Quads',s:'Glutes, single-leg stability',sch:'Double progression',
   tempo:'3-0-1',rir:'2',inc:2,sets:[{l:'1',r:'8',rest:90},{l:'2',r:'8',rest:90},{l:'3',r:'8',rest:90}],
   rule:'8 clean reps both legs on every set → +2kg per hand',
   note:'Reps are per leg. Padel is played almost entirely on one leg at a time — this is the exercise that transfers most directly to holding a lunge at the net without the knee collapsing inward.',
-  miss:'Front foot too close, turning it into a knee-dominant grind.',fix:'Step the front foot out until the shin is roughly vertical at the bottom, then lean the torso 15° forward to load the glute.'},
+  tips:['Front shin vertical at the bottom','Lean the torso about 15° forward','Back knee drops straight down, not forward','Drive through the front heel']},
  {id:'copen',n:'Copenhagen Plank',a:'abs',p:'Adductors',s:'Groin, obliques',sch:'Double progression',bw:1,
   tempo:'hold',rir:'1',rl:'Seconds',sets:[{l:'1',r:'25',rest:45},{l:'2',r:'25',rest:45},{l:'3',r:'25',rest:45}],
   rule:'30s clean both sides → progress from bent knee to full straight-leg lever',
   note:'Log seconds per side. Groin and adductor strains are the most common injury in padel and this movement has the best evidence base for preventing them. Thirty seconds a side is cheap insurance against six weeks off court.',
-  miss:'Starting on the full straight-leg version and tweaking the groin in week one.',fix:'Start with the bottom knee bent and resting on the floor. Earn the long lever over 3–4 weeks.'},
+  tips:['Top leg on the bench, body in one straight line','Elbow directly under the shoulder','Squeeze the inner thigh into the bench','Hips high, never let them sag']},
  {id:'calf1',n:'Standing Calf Raise',a:'ham',p:'Calves',s:'Achilles',sch:'Double progression',
   tempo:'2-2-1',rir:'1',inc:5,sets:[{l:'1',r:'10',rest:60},{l:'2',r:'10',rest:60},{l:'3',r:'10',rest:60}],
   rule:'10 reps with a controlled 2s pause on every set → +5kg',
   note:'Every split-step, lunge and smash on Saturday loads the Achilles. A stiff, strong calf is what lets you change direction without the ankle absorbing it.',
-  miss:'Bouncing out of the bottom using tendon recoil.',fix:'Pause a full two seconds at the deepest stretch so the muscle, not the tendon, does the work.'},
+  tips:['Full stretch at the bottom, 2s pause','Rise all the way onto the toes','Knees straight, no bouncing','Control the way down']},
  {id:'carry',n:'Suitcase Carry',a:'abs',p:'Obliques',s:'Grip, trunk',sch:'Double progression',
   tempo:'walk',rir:'1',inc:4,rl:'Metres',sets:[{l:'1',r:'40',rest:60},{l:'2',r:'40',rest:60},{l:'3',r:'40',rest:60}],
   rule:'40m each side without leaning → +4kg',
   note:'Log metres per side. Finish here, then 10 minutes of Zone 2 on the bike to flush the legs.',
-  miss:'Leaning away from the weight to counterbalance it.',fix:'Stack shoulders directly over hips and imagine the loaded side ribcage pulling down toward your hip.'},
+  tips:['Stand tall, shoulders level','Abs braced, no leaning away from the weight','Short quick steps','Crush the handle']},
 ]},
 {k:'d2',d:'TUE',n:'Upper A',obj:'Horizontal push and pull — your heaviest pressing day',
- dur:'70 min',fat:'Moderate–High',cardio:'12 min Zone 2 on the bike, post-lift',
+ dur:'70 min',fat:'Moderate–High',cardio:'8 min Zone 2 on the bike, post-lift',
  warm:['5 min row or fast walk','Band pull-aparts × 20','Scap push-ups × 10','Shoulder dislocates × 10','Bench ramp: bar×10, 50%×5, 70%×3, 85%×1'],
  ex:[
  {id:'bench',n:'Flat Barbell Bench Press',a:'chest',p:'Chest',s:'Triceps, front delts',sch:'Top set + back-off',
   tempo:'2-1-X',rir:'2',inc:2.5,sets:[{l:'TOP',r:'5',rest:180},{l:'1',r:'8',rest:150},{l:'2',r:'8',rest:150},{l:'3',r:'8',rest:150}],
   rule:'Top set hits 5 clean twice → +2.5kg next week',
   note:'Pause every rep of the back-off sets for a beat on the chest. It removes the bounce, cuts the load you need, and spares the shoulder joint you need on Saturday.',
-  miss:'Flaring the elbows to 90° and grinding the front of the shoulder.',fix:'Tuck to roughly 45–60° and touch low on the sternum, then press back toward your face, not straight up.'},
+  tips:['Shoulder blades pinched back and down','Feet flat, slight natural arch','Elbows at 45–60°, never flared to 90°','Touch low on the sternum, pause, press back toward your face']},
  {id:'pullup',n:'Weighted Pull-Up',a:'back',p:'Lats',s:'Upper back, biceps',sch:'Straight sets',bw:1,inc:2.5,
   tempo:'2-1-X',rir:'2',sets:[{l:'1',r:'6',rest:120},{l:'2',r:'6',rest:120},{l:'3',r:'6',rest:120},{l:'4',r:'6',rest:120}],
   rule:'6 clean reps on all 4 sets → +2.5kg on the belt',
   note:'Log added weight only — leave blank for bodyweight. Every rep starts from a full dead hang and finishes with the collarbone at the bar. Half reps here are the most commonly self-inflated volume in any program.',
-  miss:'Kipping the last two reps and logging them as clean.',fix:'Cross your ankles behind you and squeeze the glutes. If the legs swing forward, the set is over.'},
+  tips:['Start from a full dead hang','Chest up, glutes squeezed, no swinging','Pull the elbows down toward your ribs','Collarbone to the bar, then lower under control']},
  {id:'csrow',n:'Chest-Supported Row',a:'back',p:'Mid-back',s:'Rear delts, rhomboids',sch:'Double progression',
   tempo:'2-1-2',rir:'1',inc:2.5,sets:[{l:'1',r:'10',rest:90},{l:'2',r:'10',rest:90},{l:'3',r:'10',rest:90}],
   rule:'10 reps with a 1s squeeze on all sets → +2.5kg',
   note:'Chest-supported so your lower back stays fresh — you already spent it on squats yesterday and you spend it again Thursday.',
-  miss:'Pulling with the hands and finishing with the biceps.',fix:'Think of the hands as hooks and drive the elbows back into the wall behind you.'},
+  tips:['Chest glued to the pad throughout','Pull with the elbows, not the hands','Squeeze the shoulder blades 1s','Let the arms fully stretch at the bottom']},
  {id:'incdb',n:'Incline Dumbbell Press',a:'chest',p:'Chest (upper)',s:'Front delts',sch:'Double progression',
   tempo:'3-0-1',rir:'1',inc:2,sets:[{l:'1',r:'10',rest:75},{l:'2',r:'10',rest:75},{l:'3',r:'10',rest:75}],
   rule:'10 reps on all 3 sets → +2kg per hand',
   note:'Three seconds down. The lowering phase is where the growth stimulus lives, and it lets you get the same result with lighter dumbbells at 5am.',
-  miss:'Setting the bench too steep and turning it into a shoulder press.',fix:'30° maximum — one notch up from flat on most benches, not the middle setting.'},
+  tips:['Bench at 30°, one notch up from flat','Shoulder blades pinned back','Elbows under the wrists, around 45°','Three seconds down, smooth press up']},
  {id:'facepull',n:'Cable Face Pull',a:'delt',p:'Rear delts',s:'External rotators',sch:'Double progression',
   tempo:'2-2-2',rir:'2',inc:1.25,sets:[{l:'1',r:'15',rest:60},{l:'2',r:'15',rest:60},{l:'3',r:'15',rest:60}],
   rule:'Reps and hold quality only — do not chase load here',
   note:'This directly offsets the pressing volume above and the overhead smashing on Saturday. The cheapest shoulder insurance in the gym.',
-  miss:'Loading it heavy and turning it into an upright row with the traps.',fix:'Pull the rope apart toward your forehead and finish with knuckles facing the ceiling. If you cannot hold it 2 seconds, it is too heavy.'},
+  tips:['Set the cable at eye height','Pull the rope apart toward your forehead','Knuckles finish facing the ceiling','Light weight, hold 2s at the end']},
  {id:'hlr',n:'Hanging Leg Raise',a:'abs',p:'Abs',s:'Hip flexors',sch:'Double progression',bw:1,
   tempo:'controlled',rir:'2',sets:[{l:'1',r:'12',rest:60},{l:'2',r:'12',rest:60},{l:'3',r:'12',rest:60}],
   rule:'12 controlled reps → add a light dumbbell between the feet',
-  note:'Curl the pelvis up toward your ribs at the top, and take a full three seconds to lower. Then 12 minutes Zone 2.',
-  miss:'Swinging the legs up straight — that is hip flexors, not abs.',fix:'Pause dead-still at the bottom for a beat before each rep.'},
-]},
-{k:'d3',d:'WED',n:'Engine',obj:'The Lp(a) day — the one session with the highest return on your bloodwork',
- dur:'55 min',fat:'High (cardiovascular)',cardio:'This entire session. Bike, rower or ski erg — low impact so it does not cost your legs.',
- warm:['10 min progressive build, easy → moderate','Nasal breathing only for the first 5 min','2 × 30s pickups to open the legs before interval 1'],
- ex:[
- {id:'vo2',n:'4×4 Intervals',a:'card',p:'VO₂max',s:'Cardiac output',sch:'Straight sets',
-  tempo:'steady hard',rir:'RPE 8–9',wl:'Watts',rl:'Minutes',wu:'W',
-  sets:[{l:'1',r:'4',rest:180},{l:'2',r:'4',rest:180},{l:'3',r:'4',rest:180},{l:'4',r:'4',rest:180}],
-  rule:'Beat last week’s average watts on interval 4 — that is your VO₂max moving',
-  note:'Log average watts per interval. Your estimated max heart rate is ~179 bpm, so the working window is 161–170. No strap? Talk test: you should be able to force out three or four words, not a sentence. Interval one should feel like a mistake by minute three. Interval four should be your best.',
-  miss:'Going out too hard on interval one and fading to a jog by interval four.',fix:'Set the watts you can hold for all four, then hold them. Even pacing produces more time at VO₂max than a heroic first round.'},
- {id:'z2',n:'Zone 2 Cool-Down',a:'card',p:'Aerobic base',s:'Mitochondrial density',sch:'Straight sets',
-  tempo:'conversational',rir:'RPE 3–4',wl:'Avg HR',rl:'Minutes',wu:'bpm',
-  sets:[{l:'1',r:'10',rest:0}],
-  rule:'Hold 108–125 bpm — same HR at higher watts over the weeks means you are fitter',
-  note:'This is the pace that works on HDL 45.1 and fat oxidation. Boring and effective — the same reason your Sunday walk is programmed.',
-  miss:'Drifting up into no-man’s land at 140 bpm because it feels more productive.',fix:'If you cannot hold a full sentence, drop the resistance. Easy is the point.'},
+  note:'Curl the pelvis up toward your ribs at the top, and take a full three seconds to lower.',
+  tips:['Dead hang with the shoulders active, not slack','Curl the pelvis up, not just the legs','No swinging, pause still at the bottom','Three seconds to lower']},
  {id:'pallof',n:'Pallof Press',a:'abs',p:'Anti-rotation core',s:'Obliques',sch:'Double progression',
   tempo:'2-2-2',rir:'1',inc:2.5,sets:[{l:'1',r:'12',rest:45},{l:'2',r:'12',rest:45},{l:'3',r:'12',rest:45}],
   rule:'12 reps each side with a 2s hold → add load',
-  note:'Reps per side. Padel is a rotational sport — the core’s real job is resisting rotation you do not want, so the racket-side power has something rigid to push against.',
-  miss:'Letting the cable twist your torso on the press.',fix:'Exhale hard as you press out and keep both hips square to the front.'},
- {id:'deadbug',n:'Dead Bug',a:'abs',p:'Deep core',s:'',sch:'Double progression',bw:1,
-  tempo:'slow',rir:'1',sets:[{l:'1',r:'10',rest:45},{l:'2',r:'10',rest:45},{l:'3',r:'10',rest:45}],
-  rule:'10 slow reps each side with the back flat → slow the tempo further',
-  note:'Reps per side. Ribs down, lower back pressed into the floor throughout.',
-  miss:'Letting the ribs flare and the lower back arch off the floor.',fix:'Exhale fully as the limbs extend. Shorten the range before you lose the position.'},
+  note:'Reps per side. Moved here from Wednesday, since Wednesday is now bike-only. Padel is a rotational sport — the core’s real job is resisting rotation you do not want, so the racket side has something rigid to push against. The Zone 2 flush drops to 8 minutes to pay for it; Wednesday more than covers the aerobic volume.',
+  tips:['Half-kneeling or standing, hips square to the front','Brace the abs, exhale as you press out','Hold 2s at full extension','Do not let the cable twist you']},
 ]},
+{k:'d3',d:'WED',n:'Engine',obj:'The Lp(a) day — 60 min outdoors on a closed loop. No gym, no kit, just the bike',
+ dur:'60 min',fat:'High (cardiovascular)',cardio:'This is the whole session. Nad Al Sheba (4/6/8km loops, lit, 24h) or Al Qudra. Never open traffic — you cannot hold an interval through a roundabout.',
+ warm:['10 min building Z1 → Z2, cadence 85–90','3 × 30s openers at interval power, 90s easy spin between','Ride before sunrise or after dark — heat inflates HR and flattens power','Bottle with electrolytes on the bike, not in the car'],
+ ex:[
+ {id:'ftp20',n:'20-Minute FTP Test',a:'card',p:'Threshold',s:'Sets every number below',sch:'Straight sets',wkMax:1,
+  tempo:'90–95 rpm',tl:'Cadence',rir:'RPE 9',wl:'Avg watts',rl:'Minutes',wu:'W',inc:0,
+  sets:[{l:'1',r:'20',rest:0}],
+  rule:'FTP = your 20-minute average × 0.95. Log the raw 20-min average here.',
+  note:'Week 1 only. Warm up 15 min, then ride the hardest pace you could hold for a full hour — even, not heroic. First 5 minutes should feel too easy; if the last 3 minutes are comfortable you went out too soft. No power meter? Use average speed on the same loop in similar wind and treat that as your reference instead.',
+  tips:['Stay seated in one steady position','Pick a pace you could hold for the full 20','Even power beats a fast start','Lift only in the final 2 minutes']},
+ {id:'vo2',n:'4×4 Intervals',a:'card',p:'VO₂max',s:'Cardiac output',sch:'Straight sets',wk:2,
+  tempo:'95–100 rpm',tl:'Cadence',rir:'RPE 8–9',wl:'Avg watts',rl:'Minutes',wu:'W',inc:5,
+  sets:[{l:'1',r:'4',rest:180},{l:'2',r:'4',rest:180},{l:'3',r:'4',rest:180},{l:'4',r:'4',rest:180}],
+  rule:'All four intervals complete at target power → +5W next week',
+  note:'Target 105–115% of FTP, cadence 95–100, seated, 3 min easy spin at 50–55% FTP between. Log average watts per interval. HR lags outdoors — it will only reach 161–170 bpm by minute two, so pace on power and use HR to confirm. In heat above 32°C apparent, drop the target 5–8% and keep the duration.',
+  tips:['Seated, hands on the hoods, relaxed shoulders','Cadence 95–100, spin it rather than grind it','Settle on target watts within 30 seconds','Keep pedalling through the recoveries']},
+ {id:'z2',n:'Zone 2 Block',a:'card',p:'Aerobic base',s:'Mitochondrial density',sch:'Straight sets',
+  tempo:'85–95 rpm',tl:'Cadence',rir:'RPE 3–4',wl:'Avg watts',rl:'Minutes',wu:'W',inc:0,
+  sets:[{l:'1',r:'15',rest:0}],
+  rule:'Hold 65–75% FTP and 108–125 bpm. Same HR at higher watts over the weeks means you are fitter.',
+  note:'Ride this after the intervals, then 5 minutes spinning down to finish the hour. Do not coast — a closed loop makes this easy, open road does not. This is the block that works on HDL 45.1 and insulin sensitivity. Nothing off the bike today: the anti-rotation core work moved to Tuesday.',
+  tips:['Relaxed shoulders, light grip on the bars','Cadence 85–95','Nasal breathing if you can manage it','Never coast']},
+ ]},
 {k:'d4',d:'THU',n:'Lower B',obj:'Hinge, lateral and landing — everything padel demands, 48 hours before you need it',
  dur:'70 min',fat:'High',cardio:'None today — Saturday is coming',
  warm:['5 min bike','Leg swings 10/side','Cossack squats × 8/side','Glute bridges × 10','6 low pogo hops','Trap bar ramp after the bounds: 50%×5, 70%×3, 85%×1'],
@@ -499,32 +496,32 @@ const PROG=[
   tempo:'explosive',rir:'fresh',sets:[{l:'1',r:'5',rest:60},{l:'2',r:'5',rest:60},{l:'3',r:'5',rest:60}],
   rule:'Increase distance only when you can hold the landing 2s without a hop',
   note:'Reps per side. Placed first while you are fresh — plyometrics done tired teach bad landing mechanics. This is the exact skill that stops an ankle roll when you lunge wide for a ball.',
-  miss:'Chasing distance and landing stiff-legged with the knee collapsing inward.',fix:'Land quietly on a soft, outwardly-tracking knee and freeze for two full seconds before the next bound.'},
+  tips:['Push sideways off one leg, not forward','Land soft with the knee tracking out','Freeze 2s on the landing before the next','Let the arms swing with the jump']},
  {id:'trapbar',n:'Trap Bar Deadlift',a:'ham',p:'Posterior chain',s:'Glutes, quads',sch:'Top set + back-off',
   tempo:'2-0-X',rir:'2',inc:5,sets:[{l:'TOP',r:'5',rest:180},{l:'1',r:'8',rest:150},{l:'2',r:'8',rest:150}],
   rule:'Top set hits 5 clean twice → +5kg next week',
   note:'Trap bar over straight bar deliberately — less spinal shear, less blood pressure spike, easier to keep clean at 5am. Breathe between reps; do not hold one breath for the whole set.',
-  miss:'Hips shooting up first, turning it into a stiff-leg pull.',fix:'Push the floor away with your feet and keep chest and hips rising at the same rate.'},
+  tips:['Hips between your knees and your shoulders','Chest up, arms straight, lats tight','Push the floor away rather than pulling up','Breathe between reps, not during them']},
  {id:'legcurl',n:'Seated Leg Curl',a:'ham',p:'Hamstrings',s:'Braking muscle',sch:'Double progression',
   tempo:'2-0-3',rir:'1',inc:5,sets:[{l:'1',r:'10',rest:90},{l:'2',r:'10',rest:90},{l:'3',r:'10',rest:90}],
   rule:'10 reps with a 3s lower on all sets → next weight up',
   note:'Hamstrings are the brakes. Padel is 120 minutes of accelerating and stopping, and a quad-dominant athlete tears a hamstring doing exactly that. Seated beats lying — it trains the hamstring at longer lengths.',
-  miss:'Letting the weight slam back on the return.',fix:'Three full seconds on the way back. The lengthening phase is what protects the muscle.'},
+  tips:['Hips strapped down, back flat on the pad','Knee joint lined up with the machine pivot','Curl fully, squeeze 1s','Three seconds on the way back']},
  {id:'latlunge',n:'Lateral Lunge',a:'quad',p:'Adductors',s:'Glute med, quads',sch:'Double progression',
   tempo:'3-0-1',rir:'2',inc:2.5,sets:[{l:'1',r:'8',rest:75},{l:'2',r:'8',rest:75},{l:'3',r:'8',rest:75}],
   rule:'8 clean reps each side → +2.5kg',
   note:'Reps per side. Almost every gym exercise moves forward and back. Padel does not. This is the only session that loads you sideways, which is the direction you actually get hurt in.',
-  miss:'Letting the trailing foot rotate and the hip cave.',fix:'Keep both feet pointing straight ahead and push the hips back as you sit into the working leg.'},
+  tips:['Both feet pointing straight ahead','Push the hips back, chest up','Working knee tracks over that foot','The other leg stays straight']},
  {id:'hipthrust',n:'Hip Thrust',a:'ham',p:'Glutes',s:'',sch:'Double progression',
   tempo:'2-2-1',rir:'1',inc:5,sets:[{l:'1',r:'10',rest:90},{l:'2',r:'10',rest:90},{l:'3',r:'10',rest:90}],
   rule:'10 reps with a full 2s lockout → +5kg',
   note:'Direct glute work with almost no spinal load — it adds hip extension volume without touching the fatigue budget the deadlift already spent.',
-  miss:'Hyperextending the lower back at the top instead of finishing with the glutes.',fix:'Tuck the chin, keep the ribs down, and stop when the torso is parallel to the floor.'},
+  tips:['Bar on the hip crease, use a pad','Upper back on the edge of the bench','Chin tucked, ribs down','Squeeze the glutes 2s at the top']},
  {id:'seatcalf',n:'Seated Calf Raise',a:'ham',p:'Soleus',s:'Achilles',sch:'Double progression',
   tempo:'2-2-1',rir:'1',inc:5,sets:[{l:'1',r:'15',rest:60},{l:'2',r:'15',rest:60},{l:'3',r:'15',rest:60}],
   rule:'15 controlled reps on every set → +5kg',
   note:'Bent-knee position targets the soleus — the muscle that handles repeated low-level loading across a two-hour match, where the gastroc handles the explosive stuff.',
-  miss:'Quarter-range reps with a huge stack.',fix:'Drop the weight until the heel travels below the platform and back to a full contraction.'},
+  tips:['Knees at 90° under the pad','Let the heels drop below the platform','Pause at the bottom stretch','Full squeeze at the top']},
 ]},
 {k:'d5',d:'FRI',n:'Upper B',obj:'Vertical press and shoulder armour — zero leg fatigue by design, you play tomorrow',
  dur:'65 min',fat:'Moderate',cardio:'None — save it for the court',
@@ -534,53 +531,54 @@ const PROG=[
   tempo:'explosive',rir:'fresh',wl:'Ball kg',inc:1,sets:[{l:'1',r:'6',rest:60},{l:'2',r:'6',rest:60},{l:'3',r:'6',rest:60}],
   rule:'Never grind these — if the throw slows down, the set is finished',
   note:'Reps per side. The closest thing in the gym to a padel smash: hips lead, torso follows, arm finishes. Throw both sides even though you only play one — you do not want a 20% asymmetry across your trunk.',
-  miss:'Throwing with the arms while the hips stay still.',fix:'Start the movement by pivoting the back foot, and let the arms be the last thing that moves.'},
+  tips:['Stand side-on to the wall, feet planted','Pivot the back foot first','Hips lead, torso follows, arms finish','Catch and reset before each rep']},
  {id:'ohp',n:'Standing Overhead Press',a:'delt',p:'Delts',s:'Triceps, trunk',sch:'Top set + back-off',
   tempo:'2-0-X',rir:'2',inc:2.5,back:0.70,sets:[{l:'TOP',r:'6',rest:150},{l:'1',r:'10',rest:120},{l:'2',r:'10',rest:120}],
   rule:'Top set hits 6 clean twice → +2.5kg next week',
   note:'Back-offs are at 70%, not 80% — lighter than every other day in the program, deliberately. You need the movement pattern, not the fatigue, 24 hours before a match.',
-  miss:'Arching the lower back to press the bar around the head.',fix:'Squeeze glutes and abs before the bar leaves the shelf, then pull the head back so the bar travels straight past the face.'},
+  tips:['Feet hip-width, glutes and abs tight','Bar resting on the front delts to start','Pull the head back as the bar passes','Finish with the bar over mid-foot, not in front']},
  {id:'pulldown',n:'Neutral-Grip Lat Pulldown',a:'back',p:'Lats',s:'Biceps',sch:'Double progression',
   tempo:'2-1-2',rir:'1',inc:5,sets:[{l:'1',r:'10',rest:75},{l:'2',r:'10',rest:75},{l:'3',r:'10',rest:75},{l:'4',r:'10',rest:75}],
   rule:'10 reps on all 4 sets with a full stretch → next plate',
   note:'Neutral grip is the shoulder-friendly choice the day before padel. Let the lats stretch fully overhead each rep — that stretched position is where the growth is.',
-  miss:'Leaning back 45° and rowing the bar instead of pulling it down.',fix:'Stay near vertical with a slight backward lean and drive the elbows down toward your back pockets.'},
+  tips:['Thighs locked under the pad','Full stretch overhead on every rep','Chest up, only a slight lean back','Drive the elbows toward your back pockets']},
  {id:'dbrow',n:'Single-Arm Dumbbell Row',a:'back',p:'Lats',s:'Mid-back',sch:'Double progression',
   tempo:'2-1-2',rir:'1',inc:2,sets:[{l:'1',r:'10',rest:75},{l:'2',r:'10',rest:75},{l:'3',r:'10',rest:75}],
   rule:'10 reps with a 1s squeeze each side → +2kg',
   note:'Reps per side. Unilateral pulling catches the left-right imbalance a one-handed racket sport builds over time.',
-  miss:'Twisting the torso open to heave the dumbbell up.',fix:'Keep both shoulders square to the floor. If your body rotates, drop the weight.'},
+  tips:['Hand and knee on the bench, flat back','Both shoulders square to the floor','Pull the elbow back toward your hip','1s squeeze, full stretch down']},
  {id:'latraise',n:'Cable Lateral Raise',a:'delt',p:'Side delts',s:'',sch:'Double progression',
   tempo:'2-0-2',rir:'1',inc:1.25,sets:[{l:'1',r:'15',rest:45},{l:'2',r:'15',rest:45}],
   rule:'18 clean reps before you touch the pin',
   note:'Two sets rather than three, on purpose. This session already contains overhead pressing, pulldowns, rows and med-ball throws, and the delts have to work for two hours tomorrow. Friday shoulder volume is capped.',
-  miss:'Shrugging the weight up with the traps.',fix:'Lead with the elbow, keep the shoulder pressed down, and stop at shoulder height.'},
+  tips:['Slight forward lean, soft elbows','Lead with the elbow, not the hand','Shoulder pressed down, no shrugging','Stop at shoulder height']},
  {id:'extrot',n:'Half-Kneeling External Rotation',a:'delt',p:'Rotator cuff',s:'',sch:'Straight sets',
   tempo:'2-1-2',rir:'3',inc:0,sets:[{l:'1',r:'15',rest:45},{l:'2',r:'15',rest:45},{l:'3',r:'15',rest:45}],
   rule:'Never progress load here. Progress control.',
   note:'Reps per side. Twenty-four hours before you serve, smash and volley for two hours, this wakes up the muscles that decelerate your arm. Small, boring, and it is why your shoulder still works at 45.',
-  miss:'Letting the elbow drift away from the ribs.',fix:'Pin a rolled towel between elbow and ribcage and do not let it fall.'},
+  tips:['Half-kneeling, tall spine','Elbow pinned to the ribs at 90°','Rotate the forearm only, body still','Slow all the way back']},
  {id:'arms',n:'Arms Superset — optional',a:'arm',p:'Biceps & triceps',s:'Forearms',sch:'Double progression',
   tempo:'2-0-1',rir:'1',inc:1.25,sets:[{l:'1',r:'12',rest:60},{l:'2',r:'12',rest:60}],
   rule:'12 reps on both rounds → add the smallest increment',
   note:'Incline DB curl straight into rope pushdown, 12 reps each, two rounds. Log the curl weight. This is the first thing to cut if you are running past 65 minutes — your arms already got plenty of work from the pressing and pulling above.',
-  miss:'Keeping it in when recovery is poor because it feels like free volume.',fix:'It is not free. Skip it after a bad night’s sleep or a heavy padel week.'},
+  tips:['Curl: elbows behind the torso, no swing','Pushdown: elbows locked at your sides','Full lockout and full stretch on both','Run the two back to back, no rest between']},
 ]},
 ];
 
 const KEY='rp-log-v1', DKEY='rp-draft-v1', PKEY='rp-setplan-v1', WKEY='rp-week-v1';
 let LOG={}, cur={}, dayIdx=0, doneMap={}, setCount={}, setPlan={};
 let week=1;
-const MAXWK=8;
+const MAXWK=16;
 
 /* ================= WEEK / PROGRESSION ENGINE =================
    Every prescription is derived, never stored. Weights carry forward from
    what you actually logged, so a missed week or a bad session self-corrects
    without anyone having to remember anything. */
-const isDeload=w=>(w===4||w===8);
-const isIntense=w=>(w>=5&&w<=7);
+const isDeload=w=>(w%4===0);                       // weeks 4, 8, 12, 16
+const isIntense=w=>((w>=5&&w<=7)||(w>=13&&w<=15)); // the two heavy phases
 function phaseOf(w){ return isDeload(w)?'Deload':(isIntense(w)?'Intensify':'Build'); }
 function phaseCopy(w){
+  if(w===MAXWK)return 'Final week. Deload to <b>60%</b>, half the sets, then retest the four main lifts, body composition and FTP. Rebuild the next block off those numbers.';
   if(isDeload(w))return 'Deload week. Load drops to <b>60%</b>, sets are halved, stop at <b>4 RIR</b>. Nothing here changes your carried weights — week '+(w+1)+' picks up where week '+(w-1)+' left off.';
   if(isIntense(w))return 'Intensification. Top sets drop to <b>3–4 reps</b> at a heavier load, back-offs run at <b>85%</b>. Hold the strength while the deficit accumulates.';
   return 'Accumulation. Add load wherever you hit every rep target, hold it wherever you did not.';
@@ -1041,7 +1039,7 @@ function render(){
   const day=PROG[dayIdx];
   const warm=day.warm.map((w,i)=>`<div class="step"><span class="n">0${i+1}</span><span>${w}</span></div>`).join('');
 
-  const exs=day.ex.filter(e=>!(e.wk&&week<e.wk)).map(ex=>{
+  const exs=day.ex.filter(e=>vis(e)).map(ex=>{
     const last=lastOf(ex.id);
     const lastTxt=last
       ? `<div class="last"><b>Last (${fmtD(last.date)}):</b> ${last.sets.map(s=>(s.w?s.w+'kg':'BW')+'×'+(s.r??'–')).join(', ')}</div>`
@@ -1072,27 +1070,24 @@ function render(){
       <div class="sc-col"><button class="scirc ${addN?'on-add':''}" data-plus="${ex.id}" ${list.length>=9?'disabled':''} aria-label="Add a set">${addN?addN:'+'}</button></div>
       <div class="sc-rest"></div>
     </div>`;
-    const nx=nextChange(ex);
     return `<div class="ex" id="ex-${ex.id}" style="--acc:${A[ex.a]}">
       <div class="exh">
         <div class="r1"><h3>${ex.n}</h3><button class="tick" data-tick="${ex.id}" aria-label="Mark complete">✓</button></div>
         <div class="mus"><b>${ex.p}</b>${ex.s?' · '+ex.s:''}</div>
-        <div class="chips"><span class="chip a q" data-info="${ex.sch}">${ex.sch}</span><span class="chip q" data-info="Tempo">Tempo ${ex.tempo}</span><span class="chip q" data-info="RIR">${ex.rir} RIR</span>${achieved(ex)?`<span class="achv">✓ Target hit</span>`:''}</div>
+        <div class="chips"><span class="chip a q" data-info="${ex.sch}">${ex.sch}</span><span class="chip q" data-info="${ex.tl?'Cadence':'Tempo'}">${ex.tl||'Tempo'} ${ex.tempo}</span><span class="chip q" data-info="RIR">${ex.rir} RIR</span>${achieved(ex)?`<span class="achv">✓ Target hit</span>`:''}</div>
         ${lastTxt}
       </div>
       <div class="sets">${colHead}${rows}${setCtl}</div>
       <div class="rule"><span class="i">▲</span><span>${ex.rule}</span></div>
-      <div class="nxt ${nx.cls}">Next week &nbsp;→&nbsp; ${nx.txt}</div>
       <div class="flag" id="flag-${ex.id}">Progression target met — add weight next session</div>
       <details class="coach"><summary>Coach notes</summary>
         <div class="cn">${ex.note}</div>
-        <div class="mf"><div class="miss"><div class="t">Common mistake</div><div class="x">${ex.miss}</div></div>
-        <div class="fix"><div class="t">How to fix</div><div class="x">${ex.fix}</div></div></div>
+        <div class="tips"><div class="t">Technique</div><ul>${ex.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>
       </details>
     </div>`;
   }).join('');
 
-  const shown=day.ex.filter(e=>!(e.wk&&week<e.wk));
+  const shown=day.ex.filter(e=>vis(e));
   $('#app').innerHTML=`
    <h4 class="sec daytitle">${day.n}</h4>
    <div class="meta"><div class="obj">${day.obj}</div>
@@ -1187,14 +1182,15 @@ function advanceIfDone(id){
     }
   },550);   // brief pause so you see the tick land
 }
+function vis(e){ return !(e.wk&&week<e.wk) && !(e.wkMax&&week>e.wkMax); }
 function headerH(){const h=document.querySelector('header');return h?h.getBoundingClientRect().height:0}
 
 /* ---- the card that answers "what do I do next week" ---- */
 function weekCard(day){
   if(week>=MAXWK)
-    return `<div class="wkcard"><h5>End of the block</h5>
-      <div class="sub">Week 8 is a deload and a retest. Log the four main lifts fresh, then rebuild from real numbers.</div></div>`;
-  const rows=day.ex.filter(e=>!(e.wk&&week<e.wk)).map(ex=>{
+    return `<div class="wkcard"><h5>End of the 16 weeks</h5>
+      <div class="sub">Deload and retest. Log the four main lifts, body composition and a fresh FTP, then rebuild the next block from real numbers.</div></div>`;
+  const rows=day.ex.filter(e=>vis(e)).map(ex=>{
     const nx=nextChange(ex);
     const v=verdict(ex,recForWeek(ex,week),week);
     const cls=v===1?'':(v==null?'none':'hold');
@@ -1217,7 +1213,7 @@ function paintWeek(){
     return `<option value="${w}" ${w===week?'selected':''}>WK ${w}</option>`;
   }).join('');
   const ph=document.getElementById('wkPh');
-  ph.textContent=phaseOf(week);
+  ph.textContent='B'+Math.ceil(week/4)+' · '+phaseOf(week);
   ph.classList.toggle('dl',isDeload(week));
 }
 document.getElementById('wkSel').onchange=async e=>{
@@ -1416,6 +1412,10 @@ const INFO={
   t:'Tempo',
   b:'Three numbers describing the speed of each rep, in seconds, always in the order <b>down – pause – up</b>.<br><br>An <b>X</b> in the third slot means <b>explode</b> — try to move the weight as fast as you can, even if it moves slowly under heavy load. That intent is what builds strength.',
   e:'<div class="t">Reading it</div><b>2-0-X</b> — 2s down, no pause, explode up<br><b>2-0-1</b> — 2s down, no pause, 1s up<br><b>2-2-1</b> — 2s down, hold 2s, 1s up<br><b>3-0-1</b> — 3s down, no pause, 1s up'},
+ 'Cadence':{
+  t:'Cadence',
+  b:'Pedal revolutions per minute. It changes <b>where</b> the work lands, not how much of it there is.<br><br><b>95–100 rpm on the intervals</b> shifts load off the legs and onto the cardiovascular system — which is the entire point of Wednesday. Grinding the same watts at 70 rpm turns it into a leg session and costs you Thursday.<br><br><b>85–95 rpm in Zone 2</b>, <b>85–90 rpm</b> on the recoveries. Never coast.',
+  e:'<div class="t">If your legs burn before your lungs</div>Your cadence is too low. Shift to an easier gear and spin faster at the same watts.<br><br><div class="t">If you cannot hold 95 rpm</div>Build it over 2–3 weeks. It is a skill, not a fitness limit.'},
  'Zone 2':{
   t:'Zone 2 Cardio',
   b:'Easy, conversational-pace cardio. The test is simple: <b>you should be able to hold a full sentence while walking</b>. If you cannot, lower the incline.<br><br>Short flushes after Monday and Tuesday, ten minutes to close Wednesday, and 45–60 minutes on Sunday. This is aimed at HDL 45.1 and insulin sensitivity, not at burning calories — and it interferes with lifting far less than running does.',
@@ -1425,8 +1425,8 @@ const INFO={
   b:'Four stages, in order: <b>general</b> (raise temperature), <b>movement prep</b> (open the joints you are about to load), then <b>ramp sets</b> (practise the pattern with lighter loads), then your working sets.<br><br>The ramp sets matter most — they groove the movement and prepare the nervous system without adding meaningful fatigue.',
   e:'<div class="t">Ramping to a 60kg bench</div>Bar × 10<br>30kg × 5 &nbsp;(50%)<br>42.5kg × 3 &nbsp;(70%)<br>51kg × 1 &nbsp;(85%)<br>Then your top set.'},
  'Block':{
-  t:'The 8-Week Block',
-  b:'<b>Weeks 1–3 · Build.</b> Add load wherever you hit every rep target.<br><b>Week 4 · Deload.</b> 60% load, half the sets, 4 RIR. Your carried weights do not move — week 5 picks up from week 3.<br><b>Weeks 5–7 · Intensify.</b> Top sets drop to 3–4 reps at heavier loads, back-offs run at 85%.<br><b>Week 8 · Deload and retest.</b><br><br>The deloads are scheduled, not autoregulated. At testosterone 348 and hs-CRP 0.98 you do not get to wait until you feel wrecked.',
+  t:'The 16-Week Block',
+  b:'Four blocks of four weeks. Every fourth week is a deload.<br><br><b>B1 · Weeks 1–4</b> Build, then deload. Add load wherever you hit every rep target.<br><b>B2 · Weeks 5–8</b> Intensify, then deload. Top sets drop to 3–4 reps at heavier loads, back-offs run at 85%.<br><b>B3 · Weeks 9–12</b> Build again, from the higher base you earned.<br><b>B4 · Weeks 13–16</b> Intensify, then deload and retest everything.<br><br>Deload weeks never move your carried weights — week 5 picks up from week 3, week 9 from week 7. The deloads are scheduled, not autoregulated. At testosterone 348 and hs-CRP 0.98 you do not get to wait until you feel wrecked.',
   e:'<div class="t">How next week is set</div>Hit every rep target → the load goes up.<br>Missed by a rep or two → the same load repeats.<br>Missed badly → the load steps back down.<br><br>Nothing to remember. Log the session and the app writes next week for you.'},
 };
 function openInfo(k){
