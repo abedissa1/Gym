@@ -1035,7 +1035,7 @@ const store=(()=>{
 
 /* ---- export / import so you can move your history between copies ---- */
 async function exportData(){
-  const blob={log:LOG, exported:new Date().toISOString()};
+  const blob={v:2, log:LOG, week, setPlan, exported:new Date().toISOString()};
   const txt=JSON.stringify(blob);
   try{
     await navigator.clipboard.writeText(txt);
@@ -1053,8 +1053,23 @@ async function importData(){
   try{
     const b=JSON.parse(txt);
     if(!b.log)throw 0;
-    LOG=b.log; await store.set(KEY,JSON.stringify(LOG));
-    render(); toast('History restored');
+    /* merge rather than overwrite: same exercise + same date wins from the import,
+       everything already here is kept */
+    let added=0;
+    Object.keys(b.log).forEach(id=>{
+      const incoming=b.log[id]||[];
+      const have=LOG[id]||[];
+      incoming.forEach(rec=>{
+        const i=have.findIndex(r=>r.date===rec.date);
+        if(i>=0)have[i]=rec; else {have.push(rec);added++;}
+      });
+      have.sort((a,c)=>String(a.date).localeCompare(String(c.date)));
+      LOG[id]=have;
+    });
+    await store.set(KEY,JSON.stringify(LOG));
+    if(b.week){ week=Math.max(1,Math.min(MAXWK,parseInt(b.week)||1)); await store.set(WKEY,String(week)); paintWeek(); }
+    if(b.setPlan){ setPlan=b.setPlan; await store.set(PKEY,JSON.stringify(setPlan)); }
+    render(); toast(added?`Restored · ${added} sessions added`:'Restored · nothing new to add');
   }catch(e){ toast('Could not read that data') }
 }
 
@@ -1585,7 +1600,7 @@ document.getElementById('dataBtn').onclick=()=>{
   const modeTxt={claude:'Claude artifact storage',local:'this browser (localStorage)',
                  memory:'memory only — will not persist'}[store.mode];
   const n=Object.keys(LOG).length;
-  const c=confirm(`Saving to: ${modeTxt}\nExercises with history: ${n}\n\nOK = Export history (copy to clipboard)\nCancel = Import history (paste in)`);
+  const c=confirm(`Saving to: ${modeTxt}\nExercises with history: ${n}\n\nHistory lives in this copy of the app only. Export before you move or redeploy it.\n\nOK = Export (copy to clipboard)\nCancel = Import (paste in)`);
   c?exportData():importData();
 };
 load();
