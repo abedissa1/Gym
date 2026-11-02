@@ -64,8 +64,13 @@ button,select,input{font-family:inherit;color:inherit}
  color:var(--faint);font-size:15px;font-weight:700;line-height:1;padding:0;flex:none;cursor:pointer;
  display:flex;align-items:center;justify-content:center}
 .iconb:active{border-color:var(--acc);color:var(--acc)}
-.clock{font-size:13px;font-weight:700;color:var(--faint);letter-spacing:.02em}
+.clock{font-size:13px;font-weight:700;color:var(--faint);letter-spacing:.02em;
+ background:none;border:1px solid transparent;border-radius:10px;padding:6px 9px;cursor:pointer;
+ font-variant-numeric:tabular-nums;flex:none;transition:border-color .15s,color .15s}
 .clock.live{color:var(--acc)}
+.clock:active{border-color:rgba(var(--glow),.4);background:rgba(var(--glow),.08)}
+.clock.ping{animation:clockPing .42s ease}
+@keyframes clockPing{0%{transform:scale(1)}35%{transform:scale(1.14)}100%{transform:scale(1)}}
 
 /* exercise browser: a bare select over the whole rail */
 .exsel{position:relative;flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:7px}
@@ -115,20 +120,19 @@ button,select,input{font-family:inherit;color:inherit}
 /* ===================== WORKOUT ===================== */
 .work{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:14px 0;
  width:100%;max-width:470px;margin-inline:auto}
-.work .pips{margin-top:16px;order:2}
+.work .pipline{order:2;margin-top:15px;display:flex;align-items:center;gap:10px}
+.work .pipline .pips{flex:1;min-width:0}
+.work .pm{flex:none;font-size:11px;letter-spacing:.11em;text-transform:uppercase;font-weight:800;
+ color:rgba(255,255,255,.72);padding-bottom:5px;border-bottom:1px solid rgba(var(--glow),.45);
+ white-space:nowrap}
 .work h1{order:1;text-align:center;font-size:clamp(29px,8.6vw,42px);font-weight:800;
  letter-spacing:-.035em;line-height:1.04;color:#fff;text-wrap:balance}
 .work .musc{order:3}
-.work .meta{order:4}
-.work .cue{order:5}
-.work .sets{order:6}
-.work .musc{margin-top:7px;text-align:center;font-size:12.5px;color:var(--faint);
+.work .cue{order:4}
+.work .sets{order:5}
+.work .musc{margin-top:11px;text-align:center;font-size:12.5px;color:var(--faint);
  letter-spacing:.04em}
-.work .meta{margin-top:15px;gap:8px;font-size:12px;letter-spacing:.1em;
- color:rgba(255,255,255,.74)}
-.work .meta span{padding:7px 13px;border:1px solid rgba(var(--glow),.28);border-radius:10px;
- background:rgba(var(--glow),.07)}
-.work .meta span+span{border-left:1px solid rgba(var(--glow),.28)}
+
 .work .cue{margin-top:16px}
 .sets{margin-top:24px;flex:none;width:100%;max-width:335px;margin-inline:auto}
 .srow{display:flex;align-items:center;gap:14px;padding:11px 0;border-top:1px solid rgba(255,255,255,.07)}
@@ -160,11 +164,37 @@ button,select,input{font-family:inherit;color:inherit}
 .worknav button.go{border-color:rgba(var(--glow),.45);color:var(--acc)}
 .worknav button.arrow{flex:0 0 52px;font-size:19px;letter-spacing:0;padding:11px 0}
 
+/* ===================== WARM-UP / CARDIO ===================== */
+.card{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;
+ width:100%;max-width:470px;margin-inline:auto;padding:10px 0}
+.card h1{text-align:center;font-size:clamp(27px,8vw,38px);font-weight:800;letter-spacing:-.035em;
+ line-height:1.05;color:#fff;text-wrap:balance}
+.card .sub{margin-top:9px;text-align:center;font-size:12.5px;color:var(--faint);line-height:1.45}
+.card .steps{margin-top:20px;width:100%;max-width:400px;margin-inline:auto;list-style:none}
+.card .steps li{display:flex;gap:13px;align-items:flex-start;padding:10px 0;
+ border-top:1px solid rgba(255,255,255,.07);font-size:15px;line-height:1.4;color:var(--dim)}
+.card .steps li:last-child{border-bottom:1px solid rgba(255,255,255,.07)}
+.card .steps li b{color:var(--w);font-weight:700}
+.card .steps .n{flex:none;width:19px;font-size:11px;font-weight:800;color:rgba(var(--glow),.8);
+ letter-spacing:.04em;padding-top:3px;font-variant-numeric:tabular-nums}
+.card .ramp{color:var(--w)}
+.card .ramp em{font-style:normal;color:var(--acc);font-weight:700}
+.card .body{margin-top:18px;width:100%;max-width:400px;margin-inline:auto;text-align:center;
+ font-size:15.5px;line-height:1.5;color:var(--dim)}
+@media(max-height:680px){
+ .card h1{font-size:clamp(22px,6.4vw,28px)}
+ .card .steps{margin-top:13px}
+ .card .steps li{padding:7px 0;font-size:14px}
+}
+
 /* ===================== REST ===================== */
 .rest{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;text-align:center}
 .rest .cd{font-size:clamp(84px,30vw,150px);font-weight:800;letter-spacing:-.05em;line-height:.86;
  color:#fff;font-variant-numeric:tabular-nums}
-.rest.warn .cd{color:var(--acc);text-shadow:0 0 34px rgba(var(--glow),.5)}
+.rest.warn .cd{color:var(--acc);text-shadow:0 0 44px rgba(var(--glow),.6)}
+.rest.warn .eyebrow{color:var(--acc)}
+.rest.beat .cd{animation:cdBeat .42s cubic-bezier(.3,0,.2,1)}
+@keyframes cdBeat{0%{transform:scale(1)}26%{transform:scale(1.075)}100%{transform:scale(1)}}
 .rest .nxt{margin-top:26px;font-size:13px;color:var(--faint);letter-spacing:.03em}
 .rest .nxt b{color:var(--w);font-weight:700}
 .restbtns{flex:none;padding-top:26px;display:flex;gap:9px;width:100%;max-width:470px;margin-inline:auto}
@@ -258,8 +288,7 @@ button,select,input{font-family:inherit;color:inherit}
 @media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 @media(max-height:680px){
  .work h1{font-size:clamp(24px,7vw,31px)}
- .work .pips{margin-top:11px}
- .work .meta{margin-top:11px}
+ .work .pipline{margin-top:11px}
  .work .cue{margin-top:12px;font-size:16px}
  .srow{padding:8px 0}
  .play{width:42px;height:42px}
@@ -614,20 +643,37 @@ async function restoreTimer(){
     if(T.total && (T.run || (T.pausedLeft||0)>0)) view='rest';   // pick the rest back up
   }catch(e){}
 }
-function tone(freq,dur,vol,delay){
+/* one struck partial: fast attack, exponential decay */
+function partial(f,peak,dur,delay){
   try{
     if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();
     if(AC.state==='suspended')AC.resume();
     const o=AC.createOscillator(),g=AC.createGain();
-    o.frequency.value=freq;o.type='sine';o.connect(g);g.connect(AC.destination);
-    const t0=AC.currentTime+(delay||0);
-    g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(vol,t0+.015);
-    g.gain.exponentialRampToValueAtTime(.0001,t0+dur);
-    o.start(t0);o.stop(t0+dur+.02);
+    o.type='sine';o.frequency.value=f;o.connect(g);g.connect(AC.destination);
+    const t=AC.currentTime+(delay||0);
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(peak,t+.004);
+    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.start(t);o.stop(t+dur+.03);
   }catch(e){}
 }
-const beep=()=>[0,.18,.36].forEach((d,i)=>tone(i===2?1046:784,.16,.32,d));
-const tick=()=>tone(880,.05,.12,0);
+/* a tubular-bell strike: fundamental plus its inharmonic partials */
+function chime(f,peak,dur,delay){
+  partial(f,peak,dur,delay);
+  partial(f*2.76,peak*.3,dur*.78,delay);
+  partial(f*5.4,peak*.12,dur*.5,delay);
+}
+/* the last ten seconds: one bell per second, lifting a fourth for the final three */
+function buzz(ms){ try{ if(navigator.vibrate)navigator.vibrate(ms) }catch(e){} }
+function tick(n){
+  if(n<=3){ chime(783.99,.62,.9,0); buzz(50) }        // G5
+  else if(n<=5){ chime(659.25,.5,.9,0); buzz(40) }    // E5
+  else chime(659.25,.4,.8,0);
+}
+function beep(){                                       // zero: C–E–G rising
+  [[523.25,0],[659.25,.16],[783.99,.32]].forEach(([f,d])=>chime(f,.72,1.5,d));
+  buzz([80,70,80,70,160]);
+}
 function notify(label){
   try{
     if(!('Notification' in window)||Notification.permission!=='granted')return;
@@ -651,7 +697,7 @@ function loop(){
         lastTick=0;T.run=false;T.pausedLeft=0;clearInterval(T.iv);
         beep();notify(T.label);saveTimer();restDone();return;
       }
-      if(left<=5)tick();
+      if(left<=10)tick(left);
       lastTick=left;
       paintRest();
     }
@@ -864,8 +910,19 @@ const sessFmt=ms=>{const t=Math.max(0,Math.floor(ms/1000));
           :m+':'+String(s).padStart(2,'0')};
 function sessPaint(){
   const el=document.getElementById('clock'); if(!el)return;
-  el.textContent=sess.start?sessFmt(Date.now()-sess.start):'';
+  el.textContent=sess.start?sessFmt(Date.now()-sess.start):'0:00';
   el.classList.toggle('live',!!sess.start);
+}
+/* tap the clock to put it back to zero, or to start it if it is not running */
+function resetClock(){
+  if(!sess.start){ sessStart(); sessPaint(); toast('Clock started'); return }
+  sess.start=Date.now();
+  try{store.set(SKEY2,JSON.stringify({start:sess.start,day:dayIdx}))}catch(e){}
+  clearInterval(sess.iv);sess.iv=setInterval(sessPaint,1000);
+  sessPaint();
+  const el=document.getElementById('clock');
+  if(el){el.classList.add('ping');setTimeout(()=>el.classList.remove('ping'),420)}
+  toast('Clock reset');
 }
 function sessStart(){
   if(sess.start)return;
@@ -895,7 +952,7 @@ function restDone(silent){
   if(si!=null && si>=sets.length-1){           // that was the last set
     const i=list.indexOf(ex);
     if(i+1<list.length){ exIdx=i+1; view='work'; pendingSlide='R'; }
-    else { view='done'; }
+    else { view=hasCardio()?'cardio':'done'; pendingSlide='R'; }
   }else{
     exIdx=list.indexOf(ex); view='work';
   }
@@ -935,10 +992,12 @@ function openEdit(i){
   $('#edRL').textContent=ex.rl||'Reps';
   $('#edW').value=v.w!=null?v.w:'';
   $('#edR').value=(v.r!=null?String(v.r).replace(/[^0-9.]/g,''):'');
-  $('#edit').classList.add('on');
+  const ed=$('#edit');
+  ed.classList.add('on');
+  void ed.offsetHeight;                       // lay it out before we focus
   const first=(wf.style.display==='none')?$('#edR'):$('#edW');
-  setTimeout(()=>{ try{ first.focus(); first.setSelectionRange(0,first.value.length) }
-                   catch(e){ try{first.focus()}catch(_){} } },60);
+  try{ first.focus({preventScroll:true}); }catch(e){ try{first.focus()}catch(_){} }
+  try{ first.setSelectionRange(0,first.value.length) }catch(e){}
 }
 function closeEdit(){$('#edit').classList.remove('on');edCtx=null}
 function commitEdit(){
@@ -964,6 +1023,30 @@ function openTips(){
     <button class="cta ghost" style="margin-top:18px" id="shX">Close</button>`;
   $('#sheet').classList.add('on');
   $('#shX').onclick=()=>$('#sheet').classList.remove('on');
+}
+
+/* ================== WARM-UP / CARDIO ==================
+   They are not exercises: no sets, nothing logged. They bookend the day. */
+const hasCardio=()=>{
+  const c=(PROG[dayIdx]||{}).cardio||'';
+  return !!c && !/^none/i.test(c) && !/whole session/i.test(c);
+};
+/* the ramp line in the warm-up carries real kilos, worked out from this week's top set */
+function rampFor(step){
+  const m=String(step).match(/^(.*ramp[^:]*:)\s*(.*)$/i);
+  if(!m)return null;
+  const ex=exList().find(e=>e.sch==='Top set + back-off');
+  if(!ex)return null;
+  const top=setsOf(ex)[0];
+  if(!top||top.w==null)return null;
+  const unit=ex.wu||'kg';
+  const body=m[2].split(',').map(p=>{
+    const pm=p.match(/(\d+)%\s*×\s*(\d+)/);
+    if(!pm)return `<em>${esc(p.trim())}</em>`;
+    const kg=Math.round(top.w*(+pm[1]/100)/2.5)*2.5;   // warm-ups load in 2.5s, not 1.25s
+    return `<em>${kg}${unit} × ${pm[2]}</em>`;
+  }).join(' · ');
+  return `${esc(m[1])} ${body}`;
 }
 
 /* ================== DISCARD ================== */
@@ -1046,18 +1129,21 @@ async function finishSession(){
 }
 
 
+
 /* ================== VIEWS ================== */
 let pendingSlide=null;
 const reduceMotion=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 function render(){
   const s=$('#scr');
   if(view==='home')s.innerHTML=vHome();
+  else if(view==='warm')s.innerHTML=vWarm();
+  else if(view==='cardio')s.innerHTML=vCardio();
   else if(view==='work')s.innerHTML=vWork();
   else if(view==='rest')s.innerHTML=vRest();
   else if(view==='done')s.innerHTML=vDone();
   else if(view==='hist')s.innerHTML=vHist();
-  if(pendingSlide&&view==='work'&&!reduceMotion()){
-    const pane=s.querySelector('.work');
+  if(pendingSlide&&!reduceMotion()){
+    const pane=s.querySelector('.work,.card');
     if(pane)pane.style.animation=`paneIn${pendingSlide} .3s cubic-bezier(.33,0,.2,1)`;
   }
   pendingSlide=null;
@@ -1069,10 +1155,12 @@ function render(){
    screen can rebuild underneath without a flash. */
 function goEx(n,dir){
   const list=exList();
+  if(n===-1){ slideCard(-1,()=>{view='warm'}); return }
+  if(n===-2){ slideCard(1,()=>{view='cardio'}); return }
   if(n<0||n>=list.length)return;
-  if(n===exIdx)return;
-  const d=dir!=null?dir:(n>exIdx?1:-1);
-  const pane=document.querySelector('.work');
+  if(n===exIdx&&view==='work')return;
+  const d=dir!=null?dir:(view!=='work'?1:(n>exIdx?1:-1));
+  const pane=document.querySelector('.work,.card');
   if(pane&&!reduceMotion()){
     const r=pane.getBoundingClientRect();
     const g=document.createElement('div');
@@ -1090,14 +1178,38 @@ function goEx(n,dir){
 }
 const nextEx=()=>{
   const list=exList();
-  if(exIdx+1<list.length)goEx(exIdx+1,1);
-  else {view='done';saveView();render()}
+  if(view==='warm'){ goEx(0,1); return }
+  if(view==='cardio'){ view='done';saveView();render(); return }
+  if(exIdx+1<list.length){ goEx(exIdx+1,1); return }
+  slideCard(1,()=>{ view=hasCardio()?'cardio':'done' });
 };
-const prevEx=()=>{ if(exIdx>0)goEx(exIdx-1,-1) };
+const prevEx=()=>{
+  const list=exList();
+  if(view==='cardio'){ exIdx=list.length-1; slideCard(-1,()=>{view='work'}); return }
+  if(view==='warm')return;
+  if(exIdx>0){ goEx(exIdx-1,-1); return }
+  slideCard(-1,()=>{ view='warm' });
+};
+/* same slide, for the two cards that are not exercises */
+function slideCard(d,mutate){
+  const pane=document.querySelector('.work,.card');
+  if(pane&&!reduceMotion()){
+    const r=pane.getBoundingClientRect();
+    const g=document.createElement('div');
+    g.className='pane-ghost';g.style.top=r.top+'px';g.style.height=r.height+'px';
+    pane.style.animation='';
+    g.appendChild(pane.cloneNode(true));
+    document.getElementById('app').appendChild(g);
+    g.firstChild.style.animation=`paneOut${d>0?'L':'R'} .28s cubic-bezier(.33,0,.2,1) forwards`;
+    setTimeout(()=>g.remove(),320);
+    pendingSlide=d>0?'R':'L';
+  }
+  mutate();saveView();render();
+}
 
 /* ---- swipe anywhere on the exercise body ---- */
 function bindSwipe(){
-  const pane=document.querySelector('.work'); if(!pane)return;
+  const pane=document.querySelector('.work,.card'); if(!pane)return;
   let x0=null,y0=null,t0=0,lock=null;
   const interactive=t=>t.closest('button,select,input,a');
   pane.addEventListener('touchstart',e=>{
@@ -1144,7 +1256,7 @@ function vHome(){
   <div class="rail">
     <button class="iconb" id="histBtn" aria-label="History and backup">≡</button>
     <div class="sp"></div>
-    <span class="clock" id="clock"></span>
+    <button class="clock" id="clock" aria-label="Workout clock — tap to reset"></button>
   </div>
 
   <div class="home">
@@ -1175,8 +1287,7 @@ function vWork(){
   const list=exList(), ex=curEx();
   if(!ex)return vDone();
   const sets=setsOf(ex), now=nowSet(ex);
-  const exOpts=list.map((e,n)=>
-    `<option value="${n}" ${n===exIdx?'selected':''}>${n+1}. ${esc(e.n)}${exDone(e)?' ✓':''}</option>`).join('');
+  const exOpts=deckOpts(exIdx);
   const rows=sets.map((st,i)=>{
     const v=shownVal(ex,i), done=setDone(ex,i);
     const cls=done?'did':(i===now?'now':'');
@@ -1195,15 +1306,18 @@ function vWork(){
       <span class="lbl">${exIdx+1} / ${list.length} · Exercises</span><span class="cv"></span>
       <select id="exSel" aria-label="Jump to exercise">${exOpts}</select>
     </div>
-    <span class="clock" id="clock"></span>
+    <button class="clock" id="clock" aria-label="Workout clock — tap to reset"></button>
   </div>
 
   <div class="work">
     <h1>${esc(ex.n)}</h1>
-    <div class="pips">${list.map((e,n)=>
-      `<i class="${exDone(e)?'did':n===exIdx?'now':''}"></i>`).join('')}</div>
+    <div class="pipline">
+      <span class="pm">${tempoLbl(ex)}</span>
+      <div class="pips">${list.map((e,n)=>
+        `<i class="${exDone(e)?'did':n===exIdx?'now':''}"></i>`).join('')}</div>
+      <span class="pm">${rirLbl(ex)}</span>
+    </div>
     <div class="musc">${esc(ex.p)}${ex.s?' · '+esc(ex.s):''}</div>
-    <div class="meta"><span>${tempoLbl(ex)}</span><span>${rirLbl(ex)}</span></div>
     <div class="cue">${cueHTML(ex)}</div>
     <div class="sets">${rows}</div>
   </div>
@@ -1213,6 +1327,64 @@ function vWork(){
     <button id="tipsBtn">Technique</button>
     <button id="skipEx" class="go">${exIdx+1<list.length?'Next ›':'Finish'}</button>
   </div>`;
+}
+
+/* ---------- WARM-UP ---------- */
+function vWarm(){
+  const day=PROG[dayIdx];
+  const steps=(day.warm||[]).map((w,i)=>{
+    const ramp=rampFor(w);
+    return `<li><span class="n">${String(i+1).padStart(2,'0')}</span>
+      <span class="${ramp?'ramp':''}">${ramp||esc(w)}</span></li>`;
+  }).join('');
+  return `
+  <div class="rail">
+    <button class="iconb" id="homeBtn" aria-label="Back to week">‹</button>
+    <div class="exsel">
+      <span class="lbl">Warm-up · ${esc(day.d)}</span><span class="cv"></span>
+      <select id="exSel" aria-label="Jump to exercise">${deckOpts(-1)}</select>
+    </div>
+    <button class="clock" id="clock" aria-label="Workout clock — tap to reset"></button>
+  </div>
+  <div class="card">
+    <h1>Warm-up</h1>
+    <div class="sub">8 minutes before the first working set</div>
+    <ul class="steps">${steps}</ul>
+  </div>
+  <div class="worknav">
+    <button id="skipEx" class="go">Start the work ›</button>
+  </div>`;
+}
+
+/* ---------- CARDIO ---------- */
+function vCardio(){
+  const day=PROG[dayIdx];
+  return `
+  <div class="rail">
+    <button class="iconb" id="homeBtn" aria-label="Back to week">‹</button>
+    <div class="exsel">
+      <span class="lbl">Cardio · ${esc(day.d)}</span><span class="cv"></span>
+      <select id="exSel" aria-label="Jump to exercise">${deckOpts(-2)}</select>
+    </div>
+    <button class="clock" id="clock" aria-label="Workout clock — tap to reset"></button>
+  </div>
+  <div class="card">
+    <h1>Cardio</h1>
+    <div class="sub">Lifting is done. This is the part that works on HDL and insulin.</div>
+    <div class="body">${esc(day.cardio)}</div>
+  </div>
+  <div class="worknav">
+    <button id="prevEx" class="arrow" aria-label="Back to the lifts">‹</button>
+    <button id="skipEx" class="go">Finish</button>
+  </div>`;
+}
+/* one dropdown across warm-up, every exercise, and cardio */
+function deckOpts(sel){
+  const list=exList();
+  let o=`<option value="-1" ${sel===-1?'selected':''}>Warm-up</option>`;
+  o+=list.map((e,n)=>`<option value="${n}" ${sel===n?'selected':''}>${n+1}. ${esc(e.n)}${exDone(e)?' ✓':''}</option>`).join('');
+  if(hasCardio())o+=`<option value="-2" ${sel===-2?'selected':''}>Cardio</option>`;
+  return o;
 }
 
 /* ---------- REST: countdown, then straight on ---------- */
@@ -1234,10 +1406,10 @@ function vRest(){
   <div class="rail">
     <button class="iconb" id="homeBtn" aria-label="Back to week">‹</button>
     <div class="sp"></div>
-    <span class="clock" id="clock"></span>
+    <button class="clock" id="clock" aria-label="Workout clock — tap to reset"></button>
   </div>
 
-  <div class="rest ${left<=5?'warn':''}" id="restBox">
+  <div class="rest ${left<=10?'warn':''}" id="restBox">
     <div class="eyebrow">Rest</div>
     <div class="cd tab" id="cd">${Math.floor(left/60)}:${String(left%60).padStart(2,'0')}</div>
     <div class="nxt">${nxt}</div>
@@ -1255,7 +1427,8 @@ function paintRest(){
   const left=tLeft(), cd=document.getElementById('cd');
   if(cd)cd.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');
   const box=document.getElementById('restBox');
-  if(box)box.classList.toggle('warn',left<=5);
+  if(box){ box.classList.toggle('warn',left<=10);
+    if(left<=10&&left>0){ box.classList.remove('beat'); void box.offsetWidth; box.classList.add('beat') } }
   const tg=document.getElementById('rTog');
   if(tg)tg.textContent=T.run?'Pause':'Resume';
 }
@@ -1272,7 +1445,7 @@ function vDone(){
   <div class="rail">
     <button class="iconb" id="homeBtn" aria-label="Back to week">‹</button>
     <div class="sp"></div>
-    <span class="clock" id="clock"></span>
+    <button class="clock" id="clock" aria-label="Workout clock — tap to reset"></button>
   </div>
 
   <div class="done">
@@ -1341,7 +1514,9 @@ function bind(){
     const list=exList();
     if(!list.length){toast('Nothing scheduled this week');return}
     exIdx=list.findIndex(e=>!exDone(e)); if(exIdx<0)exIdx=0;
-    sessStart();view='work';saveView();render();keepAwake();
+    sessStart();
+    view=(exIdx===0&&!exDone(list[0]))?'warm':'work';   // start at the warm-up
+    saveView();render();keepAwake();
   });
   on('homeBtn',()=>{view='home';saveView();render()});
   on('histBtn',()=>{view='hist';saveView();render()});
@@ -1354,13 +1529,14 @@ function bind(){
   on('expBtn',()=>openBackup('out'));
   on('impBtn',()=>openBackup('in'));
 
+  on('clock',resetClock);
   on('rAdd',()=>addRest(30));
   on('rTog',togglePause);
   on('rSkip',()=>{stopRest();restDone(true)});
 
   document.querySelectorAll('[data-play]').forEach(b=>b.onclick=()=>playSet(+b.dataset.play));
   document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openEdit(+b.dataset.edit));
-  if(view==='work')bindSwipe();
+  if(view==='work'||view==='warm'||view==='cardio')bindSwipe();
 }
 
 /* editor + sheet chrome */
