@@ -301,9 +301,13 @@ details.coach[open] summary::after{content:" −"}
 .toast.on{opacity:1}
 
 /* ---------- full-screen final countdown ---------- */
-#ovl{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;
- align-items:center;justify-content:center;background:#12060A;text-align:center;padding:24px}
-#ovl.on{display:flex}
+#ovl{position:fixed;inset:0;z-index:200;display:none;background:#12060A;overflow:hidden}
+#ovl.on{display:block}
+#ovlCount{position:absolute;inset:0;display:flex;flex-direction:column;
+ align-items:center;justify-content:center;text-align:center;padding:24px}
+#ovl.go #ovlCount{display:none}
+#ovlGo{display:none}
+#ovl.go #ovlGo{display:flex}
 #ovl .lbl{font-size:15px;letter-spacing:.3em;text-transform:uppercase;color:#FF4D4D;font-weight:800}
 #ovl .big{font-size:min(64vw,360px);font-weight:800;line-height:.9;letter-spacing:-.05em;
  font-variant-numeric:tabular-nums;color:#FF5D5D;margin:8px 0}
@@ -312,11 +316,60 @@ details.coach[open] summary::after{content:" −"}
  border-radius:12px;padding:14px 24px;font-size:15px;font-weight:700}
 #ovl.flash{animation:fl .5s steps(1,end) infinite}
 @keyframes fl{0%{background:#12060A}50%{background:#3A0A16}}
-#ovl.go{background:#06180F;animation:none}
-#ovl.go .big{color:#34D97B;font-size:min(32vw,200px)}
-#ovl.go .lbl{color:#34D97B}
-#ovl.go .sub{color:#7FC59B}
 @media(prefers-reduced-motion:reduce){#ovl.flash{animation:none;background:#2A0A12}}
+
+/* ================= GO SCREEN · Stadium ================= */
+#ovl.go{background:#04100A;animation:none}
+#ovlGo{position:absolute;inset:0;flex-direction:column;overflow:hidden;justify-content:center;
+ padding:calc(14px + env(safe-area-inset-top)) 20px calc(10px + env(safe-area-inset-bottom))}
+#ovlGo:before{content:'';position:absolute;left:50%;top:50%;width:155%;height:110%;
+ transform:translate(-50%,-62%);pointer-events:none;
+ background:radial-gradient(closest-side,rgba(52,217,123,.30),rgba(52,217,123,.07) 55%,transparent 78%)}
+#ovlGo:after{content:'';position:absolute;inset:0;pointer-events:none;
+ background:radial-gradient(135% 80% at 50% 44%,transparent 40%,rgba(0,0,0,.74) 100%)}
+#ovlGo>*{position:relative;z-index:2}
+#ovlGo .pips{display:flex;gap:5px;justify-content:center;align-items:center}
+#ovlGo .pips i{display:block;height:3px;width:20px;border-radius:2px;background:rgba(255,255,255,.17)}
+#ovlGo .pips i.did{background:rgba(52,217,123,.46)}
+#ovlGo .pips i.now{background:#49F09B;width:34px;box-shadow:0 0 14px rgba(73,240,155,.75)}
+#ovlGo .gcue{text-align:center;font-size:clamp(19px,5.6vw,25px);font-weight:800;
+ line-height:1.26;letter-spacing:-.015em;color:#F2FFF8;text-shadow:0 0 14px rgba(52,217,123,.3)}
+#ovlGo .gcue em{font-style:normal;color:rgba(120,230,170,.42);font-weight:600;padding:0 3px}
+#ovlGo .gmid{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;
+ min-height:0;gap:14px;padding:18px 0 16px}
+#ovlGo .gnum{font-size:clamp(66px,23vw,104px);font-weight:800;letter-spacing:-.055em;line-height:.84;
+ color:#fff;display:flex;align-items:baseline;justify-content:center;
+ font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+#ovlGo .gnum u{text-decoration:none;font-size:.34em;font-weight:700;letter-spacing:-.02em;
+ color:rgba(255,255,255,.5);margin-left:.1em;align-self:flex-start;margin-top:.34em}
+#ovlGo .gnum s{text-decoration:none;font-size:.4em;font-weight:400;color:rgba(73,240,155,.55);
+ margin:0 .13em;align-self:center;position:relative;top:-.06em}
+#ovlGo .greps{margin-top:9px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+ font-weight:800;color:rgba(73,240,155,.72);text-align:center}
+#ovlGo .gex{margin-top:0;text-align:center;font-size:15.5px;font-weight:600;color:rgba(255,255,255,.56)}
+#ovlGo .gmeta{margin-top:8px;display:flex;justify-content:center;align-items:center;
+ font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:rgba(255,255,255,.34)}
+#ovlGo .gmeta span{padding:0 13px}
+#ovlGo .gmeta span+span{border-left:1px solid rgba(255,255,255,.13)}
+#ovlGo .gfoot{padding:18px 0 0;display:flex;align-items:center;justify-content:center;gap:9px}
+#ovlGo .gtap{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;
+ color:rgba(255,255,255,.42);white-space:nowrap}
+#ovlGo .gtap:before,#ovlGo .gtap:after{content:'';display:inline-block;width:14px;height:1px;
+ background:rgba(255,255,255,.16);vertical-align:middle;margin:0 9px}
+
+/* short screens — Duo cover panel and similar: squeeze the air, keep the type */
+@media(max-height:740px){
+ #ovlGo{padding-top:calc(10px + env(safe-area-inset-top))}
+ #ovlGo .gmid{gap:11px;padding:13px 0 11px}
+ #ovlGo .greps{margin-top:7px}
+ #ovlGo .gmeta{margin-top:6px}
+ #ovlGo .gfoot{padding:13px 0 0}
+}
+@media(max-height:620px){
+ #ovlGo .gmid{gap:8px;padding:9px 0 8px}
+ #ovlGo .gex{font-size:14px}
+ #ovlGo .gfoot{padding:10px 0 0}
+}
 .cardio{margin:12px 16px 0;background:var(--card);border:1px solid var(--line);border-radius:16px;
  padding:15px 17px;font-size:13.5px;color:var(--dim)}
 .cardio b{color:var(--purple);font-weight:700}
@@ -376,10 +429,13 @@ h4.sec.daytitle{color:var(--rest);padding:24px 16px 0}
 </div></div>
 
 <div id="ovl">
- <div class="lbl" id="ovlLbl">Get ready</div>
- <div class="big" id="ovlNum">10</div>
- <div class="sub" id="ovlSub">Next set coming up</div>
- <button class="dismiss" id="ovlX">Dismiss</button>
+ <div id="ovlCount">
+  <div class="lbl" id="ovlLbl">Get ready</div>
+  <div class="big" id="ovlNum">10</div>
+  <div class="sub" id="ovlSub">Next set coming up</div>
+  <button class="dismiss" id="ovlX">Dismiss</button>
+ </div>
+ <div id="ovlGo"></div>
 </div>
 
 <script>
@@ -394,36 +450,43 @@ const PROG=[
   tempo:'2-0-X',rir:'2',inc:2.5,sets:[{l:'TOP',r:'5',rest:180},{l:'1',r:'8',rest:150},{l:'2',r:'8',rest:150},{l:'3',r:'8',rest:150}],
   rule:'Top set hits 5 clean twice → +2.5kg next week',
   note:'If bar speed drops noticeably before your last rep, rack it at 2 RIR. Grinding a 6th rep adds fatigue, not muscle, in a deficit.',
+  cue:'Chest up|Knees out|Brace hard',
   tips:['Feet shoulder-width, toes out 15–30°','Brace your abs hard before you unrack','Chest up, bar over mid-foot the whole way','Knees track over the toes, push them out','Hips and chest rise together out of the hole']},
  {id:'rdl',n:'Romanian Deadlift',a:'ham',p:'Hamstrings',s:'Glutes, erectors',sch:'Straight sets',
   tempo:'3-1-1',rir:'2',inc:2.5,sets:[{l:'1',r:'8',rest:120},{l:'2',r:'8',rest:120},{l:'3',r:'8',rest:120}],
   rule:'All 3 sets at 8 with a flat back → +2.5kg',
   note:'This is a stretch exercise, not a lifting exercise. The set ends when your hamstrings stop lengthening and your lower back starts rounding — regardless of the rep count.',
+  cue:'Hips back|Flat back|Bar on thighs',
   tips:['Soft knees, then push the hips back','Bar stays touching your thighs','Flat back, chest proud, shoulders down','Stop when the hamstrings stop stretching']},
  {id:'nordic',n:'Nordic Hamstring Curl',a:'ham',p:'Hamstrings',s:'Eccentric strength',sch:'Straight sets',bw:1,wk:3,
   tempo:'slow-0-assist',rir:'1',sets:[{l:'1',r:'5',rest:90},{l:'2',r:'5',rest:90}],
   rule:'Slow the descent by 1s each week before adding reps',
   note:'Enters in week 3. Strongest evidence base of any exercise for preventing hamstring strains. Deliberately on Monday, not Thursday — Nordics produce 48-hour soreness and Thursday sits 48 hours before padel. On Nordic weeks, drop the Bulgarian split squat to 2 sets to hold the session at 70 minutes.',
+  cue:'Hips locked|Glutes tight|Go slow',
   tips:['Knees padded, ankles anchored under something solid','Hips locked straight, glutes squeezed','Lower as slowly as you can control','Push off the floor with your hands to return']},
  {id:'bulg',n:'Bulgarian Split Squat',a:'quad',p:'Quads',s:'Glutes, single-leg stability',sch:'Double progression',
   tempo:'3-0-1',rir:'2',inc:2,sets:[{l:'1',r:'8',rest:90},{l:'2',r:'8',rest:90},{l:'3',r:'8',rest:90}],
   rule:'8 clean reps both legs on every set → +2kg per hand',
   note:'Reps are per leg. Padel is played almost entirely on one leg at a time — this is the exercise that transfers most directly to holding a lunge at the net without the knee collapsing inward.',
+  cue:'Shin vertical|Lean forward|Front heel',
   tips:['Front shin vertical at the bottom','Lean the torso about 15° forward','Back knee drops straight down, not forward','Drive through the front heel']},
  {id:'copen',n:'Copenhagen Plank',a:'abs',p:'Adductors',s:'Groin, obliques',sch:'Double progression',bw:1,
   tempo:'hold',rir:'1',rl:'Seconds',sets:[{l:'1',r:'25',rest:45},{l:'2',r:'25',rest:45},{l:'3',r:'25',rest:45}],
   rule:'30s clean both sides → progress from bent knee to full straight-leg lever',
   note:'Log seconds per side. Groin and adductor strains are the most common injury in padel and this movement has the best evidence base for preventing them. Thirty seconds a side is cheap insurance against six weeks off court.',
+  cue:'Straight line|Hips high|Squeeze in',
   tips:['Top leg on the bench, body in one straight line','Elbow directly under the shoulder','Squeeze the inner thigh into the bench','Hips high, never let them sag']},
  {id:'calf1',n:'Standing Calf Raise',a:'ham',p:'Calves',s:'Achilles',sch:'Double progression',
   tempo:'2-2-1',rir:'1',inc:5,sets:[{l:'1',r:'10',rest:60},{l:'2',r:'10',rest:60},{l:'3',r:'10',rest:60}],
   rule:'10 reps with a controlled 2s pause on every set → +5kg',
   note:'Every split-step, lunge and smash on Saturday loads the Achilles. A stiff, strong calf is what lets you change direction without the ankle absorbing it.',
+  cue:'Full stretch|Pause 2s|Knees straight',
   tips:['Full stretch at the bottom, 2s pause','Rise all the way onto the toes','Knees straight, no bouncing','Control the way down']},
  {id:'carry',n:'Suitcase Carry',a:'abs',p:'Obliques',s:'Grip, trunk',sch:'Double progression',
   tempo:'walk',rir:'1',inc:4,rl:'Metres',sets:[{l:'1',r:'40',rest:60},{l:'2',r:'40',rest:60},{l:'3',r:'40',rest:60}],
   rule:'40m each side without leaning → +4kg',
   note:'Log metres per side. Finish here, then 10 minutes of Zone 2 on the bike to flush the legs.',
+  cue:'Stand tall|Shoulders level|Brace hard',
   tips:['Stand tall, shoulders level','Abs braced, no leaning away from the weight','Short quick steps','Crush the handle']},
 ]},
 {k:'d2',d:'TUE',n:'Upper A',obj:'Horizontal push and pull — your heaviest pressing day',
@@ -434,36 +497,43 @@ const PROG=[
   tempo:'2-1-X',rir:'2',inc:2.5,sets:[{l:'TOP',r:'5',rest:180},{l:'1',r:'8',rest:150},{l:'2',r:'8',rest:150},{l:'3',r:'8',rest:150}],
   rule:'Top set hits 5 clean twice → +2.5kg next week',
   note:'Pause every rep of the back-off sets for a beat on the chest. It removes the bounce, cuts the load you need, and spares the shoulder joint you need on Saturday.',
+  cue:'Blades back|Elbows in|Touch low',
   tips:['Shoulder blades pinched back and down','Feet flat, slight natural arch','Elbows at 45–60°, never flared to 90°','Touch low on the sternum, pause, press back toward your face']},
  {id:'pullup',n:'Weighted Pull-Up',a:'back',p:'Lats',s:'Upper back, biceps',sch:'Straight sets',bw:1,inc:2.5,
   tempo:'2-1-X',rir:'2',sets:[{l:'1',r:'6',rest:120},{l:'2',r:'6',rest:120},{l:'3',r:'6',rest:120},{l:'4',r:'6',rest:120}],
   rule:'6 clean reps on all 4 sets → +2.5kg on the belt',
   note:'Log added weight only — leave blank for bodyweight. Every rep starts from a full dead hang and finishes with the collarbone at the bar. Half reps here are the most commonly self-inflated volume in any program.',
+  cue:'Dead hang|No swing|Chest to bar',
   tips:['Start from a full dead hang','Chest up, glutes squeezed, no swinging','Pull the elbows down toward your ribs','Collarbone to the bar, then lower under control']},
  {id:'csrow',n:'Chest-Supported Row',a:'back',p:'Mid-back',s:'Rear delts, rhomboids',sch:'Double progression',
   tempo:'2-1-2',rir:'1',inc:2.5,sets:[{l:'1',r:'10',rest:90},{l:'2',r:'10',rest:90},{l:'3',r:'10',rest:90}],
   rule:'10 reps with a 1s squeeze on all sets → +2.5kg',
   note:'Chest-supported so your lower back stays fresh — you already spent it on squats yesterday and you spend it again Thursday.',
+  cue:'Chest on pad|Lead elbows|Squeeze 1s',
   tips:['Chest glued to the pad throughout','Pull with the elbows, not the hands','Squeeze the shoulder blades 1s','Let the arms fully stretch at the bottom']},
  {id:'incdb',n:'Incline Dumbbell Press',a:'chest',p:'Chest (upper)',s:'Front delts',sch:'Double progression',
   tempo:'3-0-1',rir:'1',inc:2,sets:[{l:'1',r:'10',rest:75},{l:'2',r:'10',rest:75},{l:'3',r:'10',rest:75}],
   rule:'10 reps on all 3 sets → +2kg per hand',
   note:'Three seconds down. The lowering phase is where the growth stimulus lives, and it lets you get the same result with lighter dumbbells at 5am.',
+  cue:'Bench 30°|Blades back|3s down',
   tips:['Bench at 30°, one notch up from flat','Shoulder blades pinned back','Elbows under the wrists, around 45°','Three seconds down, smooth press up']},
  {id:'facepull',n:'Cable Face Pull',a:'delt',p:'Rear delts',s:'External rotators',sch:'Double progression',
   tempo:'2-2-2',rir:'2',inc:1.25,sets:[{l:'1',r:'15',rest:60},{l:'2',r:'15',rest:60},{l:'3',r:'15',rest:60}],
   rule:'Reps and hold quality only — do not chase load here',
   note:'This directly offsets the pressing volume above and the overhead smashing on Saturday. The cheapest shoulder insurance in the gym.',
+  cue:'Eye height|Pull apart|Hold 2s',
   tips:['Set the cable at eye height','Pull the rope apart toward your forehead','Knuckles finish facing the ceiling','Light weight, hold 2s at the end']},
  {id:'hlr',n:'Hanging Leg Raise',a:'abs',p:'Abs',s:'Hip flexors',sch:'Double progression',bw:1,
   tempo:'controlled',rir:'2',sets:[{l:'1',r:'12',rest:60},{l:'2',r:'12',rest:60},{l:'3',r:'12',rest:60}],
   rule:'12 controlled reps → add a light dumbbell between the feet',
   note:'Curl the pelvis up toward your ribs at the top, and take a full three seconds to lower.',
+  cue:'Curl the pelvis|No swing|3s down',
   tips:['Dead hang with the shoulders active, not slack','Curl the pelvis up, not just the legs','No swinging, pause still at the bottom','Three seconds to lower']},
  {id:'pallof',n:'Pallof Press',a:'abs',p:'Anti-rotation core',s:'Obliques',sch:'Double progression',
   tempo:'2-2-2',rir:'1',inc:2.5,sets:[{l:'1',r:'12',rest:45},{l:'2',r:'12',rest:45},{l:'3',r:'12',rest:45}],
   rule:'12 reps each side with a 2s hold → add load',
   note:'Reps per side. Moved here from Wednesday, since Wednesday is now bike-only. Padel is a rotational sport — the core’s real job is resisting rotation you do not want, so the racket side has something rigid to push against. The Zone 2 flush drops to 8 minutes to pay for it; Wednesday more than covers the aerobic volume.',
+  cue:'Hips square|Brace|Hold 2s',
   tips:['Half-kneeling or standing, hips square to the front','Brace the abs, exhale as you press out','Hold 2s at full extension','Do not let the cable twist you']},
 ]},
 {k:'d3',d:'WED',n:'Engine',obj:'The Lp(a) day — 60 min outdoors on a closed loop. No gym, no kit, just the bike',
@@ -475,18 +545,21 @@ const PROG=[
   sets:[{l:'1',r:'20',rest:0}],
   rule:'FTP = your 20-minute average × 0.95. Log the raw 20-min average here.',
   note:'Week 1 only. Warm up 15 min, then ride the hardest pace you could hold for a full hour — even, not heroic. First 5 minutes should feel too easy; if the last 3 minutes are comfortable you went out too soft. No power meter? Use average speed on the same loop in similar wind and treat that as your reference instead.',
+  cue:'Stay seated|Even pace|Hold the number',
   tips:['Stay seated in one steady position','Pick a pace you could hold for the full 20','Even power beats a fast start','Lift only in the final 2 minutes']},
  {id:'vo2',n:'4×4 Intervals',a:'card',p:'VO₂max',s:'Cardiac output',sch:'Straight sets',wk:2,
   tempo:'95–100 rpm',tl:'Cadence',rir:'RPE 8–9',wl:'Avg watts',rl:'Minutes',wu:'W',inc:5,
   sets:[{l:'1',r:'4',rest:180},{l:'2',r:'4',rest:180},{l:'3',r:'4',rest:180},{l:'4',r:'4',rest:180}],
   rule:'All four intervals complete at target power → +5W next week',
   note:'Target 105–115% of FTP, cadence 95–100, seated, 3 min easy spin at 50–55% FTP between. Log average watts per interval. HR lags outdoors — it will only reach 161–170 bpm by minute two, so pace on power and use HR to confirm. In heat above 32°C apparent, drop the target 5–8% and keep the duration.',
+  cue:'Stay seated|Spin it|Hold watts',
   tips:['Seated, hands on the hoods, relaxed shoulders','Cadence 95–100, spin it rather than grind it','Settle on target watts within 30 seconds','Keep pedalling through the recoveries']},
  {id:'z2',n:'Zone 2 Block',a:'card',p:'Aerobic base',s:'Mitochondrial density',sch:'Straight sets',
   tempo:'85–95 rpm',tl:'Cadence',rir:'RPE 3–4',wl:'Avg watts',rl:'Minutes',wu:'W',inc:0,
   sets:[{l:'1',r:'15',rest:0}],
   rule:'Hold 65–75% FTP and 108–125 bpm. Same HR at higher watts over the weeks means you are fitter.',
   note:'Ride this after the intervals, then 5 minutes spinning down to finish the hour. Do not coast — a closed loop makes this easy, open road does not. This is the block that works on HDL 45.1 and insulin sensitivity. Nothing off the bike today: the anti-rotation core work moved to Tuesday.',
+  cue:'Relaxed|85–95 rpm|Never coast',
   tips:['Relaxed shoulders, light grip on the bars','Cadence 85–95','Nasal breathing if you can manage it','Never coast']},
  ]},
 {k:'d4',d:'THU',n:'Lower B',obj:'Hinge, lateral and landing — everything padel demands, 48 hours before you need it',
@@ -497,31 +570,37 @@ const PROG=[
   tempo:'explosive',rir:'fresh',sets:[{l:'1',r:'5',rest:60},{l:'2',r:'5',rest:60},{l:'3',r:'5',rest:60}],
   rule:'Increase distance only when you can hold the landing 2s without a hop',
   note:'Reps per side. Placed first while you are fresh — plyometrics done tired teach bad landing mechanics. This is the exact skill that stops an ankle roll when you lunge wide for a ball.',
+  cue:'Push sideways|Soft knee|Freeze 2s',
   tips:['Push sideways off one leg, not forward','Land soft with the knee tracking out','Freeze 2s on the landing before the next','Let the arms swing with the jump']},
  {id:'trapbar',n:'Trap Bar Deadlift',a:'ham',p:'Posterior chain',s:'Glutes, quads',sch:'Top set + back-off',
   tempo:'2-0-X',rir:'2',inc:5,sets:[{l:'TOP',r:'5',rest:180},{l:'1',r:'8',rest:150},{l:'2',r:'8',rest:150}],
   rule:'Top set hits 5 clean twice → +5kg next week',
   note:'Trap bar over straight bar deliberately — less spinal shear, less blood pressure spike, easier to keep clean at 5am. Breathe between reps; do not hold one breath for the whole set.',
+  cue:'Chest up|Arms straight|Push the floor',
   tips:['Hips between your knees and your shoulders','Chest up, arms straight, lats tight','Push the floor away rather than pulling up','Breathe between reps, not during them']},
  {id:'legcurl',n:'Seated Leg Curl',a:'ham',p:'Hamstrings',s:'Braking muscle',sch:'Double progression',
   tempo:'2-0-3',rir:'1',inc:5,sets:[{l:'1',r:'10',rest:90},{l:'2',r:'10',rest:90},{l:'3',r:'10',rest:90}],
   rule:'10 reps with a 3s lower on all sets → next weight up',
   note:'Hamstrings are the brakes. Padel is 120 minutes of accelerating and stopping, and a quad-dominant athlete tears a hamstring doing exactly that. Seated beats lying — it trains the hamstring at longer lengths.',
+  cue:'Hips down|Full curl|3s back',
   tips:['Hips strapped down, back flat on the pad','Knee joint lined up with the machine pivot','Curl fully, squeeze 1s','Three seconds on the way back']},
  {id:'latlunge',n:'Lateral Lunge',a:'quad',p:'Adductors',s:'Glute med, quads',sch:'Double progression',
   tempo:'3-0-1',rir:'2',inc:2.5,sets:[{l:'1',r:'8',rest:75},{l:'2',r:'8',rest:75},{l:'3',r:'8',rest:75}],
   rule:'8 clean reps each side → +2.5kg',
   note:'Reps per side. Almost every gym exercise moves forward and back. Padel does not. This is the only session that loads you sideways, which is the direction you actually get hurt in.',
+  cue:'Feet straight|Hips back|Knee over foot',
   tips:['Both feet pointing straight ahead','Push the hips back, chest up','Working knee tracks over that foot','The other leg stays straight']},
  {id:'hipthrust',n:'Hip Thrust',a:'ham',p:'Glutes',s:'',sch:'Double progression',
   tempo:'2-2-1',rir:'1',inc:5,sets:[{l:'1',r:'10',rest:90},{l:'2',r:'10',rest:90},{l:'3',r:'10',rest:90}],
   rule:'10 reps with a full 2s lockout → +5kg',
   note:'Direct glute work with almost no spinal load — it adds hip extension volume without touching the fatigue budget the deadlift already spent.',
+  cue:'Chin tucked|Ribs down|Squeeze 2s',
   tips:['Bar on the hip crease, use a pad','Upper back on the edge of the bench','Chin tucked, ribs down','Squeeze the glutes 2s at the top']},
  {id:'seatcalf',n:'Seated Calf Raise',a:'ham',p:'Soleus',s:'Achilles',sch:'Double progression',
   tempo:'2-2-1',rir:'1',inc:5,sets:[{l:'1',r:'15',rest:60},{l:'2',r:'15',rest:60},{l:'3',r:'15',rest:60}],
   rule:'15 controlled reps on every set → +5kg',
   note:'Bent-knee position targets the soleus — the muscle that handles repeated low-level loading across a two-hour match, where the gastroc handles the explosive stuff.',
+  cue:'Knees at 90°|Heels drop|Full squeeze',
   tips:['Knees at 90° under the pad','Let the heels drop below the platform','Pause at the bottom stretch','Full squeeze at the top']},
 ]},
 {k:'d5',d:'FRI',n:'Upper B',obj:'Vertical press and shoulder armour — zero leg fatigue by design, you play tomorrow',
@@ -532,36 +611,43 @@ const PROG=[
   tempo:'explosive',rir:'fresh',wl:'Ball kg',inc:1,sets:[{l:'1',r:'6',rest:60},{l:'2',r:'6',rest:60},{l:'3',r:'6',rest:60}],
   rule:'Never grind these — if the throw slows down, the set is finished',
   note:'Reps per side. The closest thing in the gym to a padel smash: hips lead, torso follows, arm finishes. Throw both sides even though you only play one — you do not want a 20% asymmetry across your trunk.',
+  cue:'Pivot back foot|Hips lead|Arms last',
   tips:['Stand side-on to the wall, feet planted','Pivot the back foot first','Hips lead, torso follows, arms finish','Catch and reset before each rep']},
  {id:'ohp',n:'Standing Overhead Press',a:'delt',p:'Delts',s:'Triceps, trunk',sch:'Top set + back-off',
   tempo:'2-0-X',rir:'2',inc:2.5,back:0.70,sets:[{l:'TOP',r:'6',rest:150},{l:'1',r:'10',rest:120},{l:'2',r:'10',rest:120}],
   rule:'Top set hits 6 clean twice → +2.5kg next week',
   note:'Back-offs are at 70%, not 80% — lighter than every other day in the program, deliberately. You need the movement pattern, not the fatigue, 24 hours before a match.',
+  cue:'Glutes tight|Head back|Bar over mid-foot',
   tips:['Feet hip-width, glutes and abs tight','Bar resting on the front delts to start','Pull the head back as the bar passes','Finish with the bar over mid-foot, not in front']},
  {id:'pulldown',n:'Neutral-Grip Lat Pulldown',a:'back',p:'Lats',s:'Biceps',sch:'Double progression',
   tempo:'2-1-2',rir:'1',inc:5,sets:[{l:'1',r:'10',rest:75},{l:'2',r:'10',rest:75},{l:'3',r:'10',rest:75},{l:'4',r:'10',rest:75}],
   rule:'10 reps on all 4 sets with a full stretch → next plate',
   note:'Neutral grip is the shoulder-friendly choice the day before padel. Let the lats stretch fully overhead each rep — that stretched position is where the growth is.',
+  cue:'Thighs locked|Full stretch|Lead elbows',
   tips:['Thighs locked under the pad','Full stretch overhead on every rep','Chest up, only a slight lean back','Drive the elbows toward your back pockets']},
  {id:'dbrow',n:'Single-Arm Dumbbell Row',a:'back',p:'Lats',s:'Mid-back',sch:'Double progression',
   tempo:'2-1-2',rir:'1',inc:2,sets:[{l:'1',r:'10',rest:75},{l:'2',r:'10',rest:75},{l:'3',r:'10',rest:75}],
   rule:'10 reps with a 1s squeeze each side → +2kg',
   note:'Reps per side. Unilateral pulling catches the left-right imbalance a one-handed racket sport builds over time.',
+  cue:'Flat back|Shoulders square|Elbow to hip',
   tips:['Hand and knee on the bench, flat back','Both shoulders square to the floor','Pull the elbow back toward your hip','1s squeeze, full stretch down']},
  {id:'latraise',n:'Cable Lateral Raise',a:'delt',p:'Side delts',s:'',sch:'Double progression',
   tempo:'2-0-2',rir:'1',inc:1.25,sets:[{l:'1',r:'15',rest:45},{l:'2',r:'15',rest:45}],
   rule:'18 clean reps before you touch the pin',
   note:'Two sets rather than three, on purpose. This session already contains overhead pressing, pulldowns, rows and med-ball throws, and the delts have to work for two hours tomorrow. Friday shoulder volume is capped.',
+  cue:'Lead the elbow|No shrug|Stop at shoulder',
   tips:['Slight forward lean, soft elbows','Lead with the elbow, not the hand','Shoulder pressed down, no shrugging','Stop at shoulder height']},
  {id:'extrot',n:'Half-Kneeling External Rotation',a:'delt',p:'Rotator cuff',s:'',sch:'Straight sets',
   tempo:'2-1-2',rir:'3',inc:0,sets:[{l:'1',r:'15',rest:45},{l:'2',r:'15',rest:45},{l:'3',r:'15',rest:45}],
   rule:'Never progress load here. Progress control.',
   note:'Reps per side. Twenty-four hours before you serve, smash and volley for two hours, this wakes up the muscles that decelerate your arm. Small, boring, and it is why your shoulder still works at 45.',
+  cue:'Elbow pinned|Rotate only|Slow back',
   tips:['Half-kneeling, tall spine','Elbow pinned to the ribs at 90°','Rotate the forearm only, body still','Slow all the way back']},
  {id:'arms',n:'Arms Superset — optional',a:'arm',p:'Biceps & triceps',s:'Forearms',sch:'Double progression',
   tempo:'2-0-1',rir:'1',inc:1.25,sets:[{l:'1',r:'12',rest:60},{l:'2',r:'12',rest:60}],
   rule:'12 reps on both rounds → add the smallest increment',
   note:'Incline DB curl straight into rope pushdown, 12 reps each, two rounds. Log the curl weight. This is the first thing to cut if you are running past 65 minutes — your arms already got plenty of work from the pressing and pulling above.',
+  cue:'No swing|Elbows fixed|Full range',
   tips:['Curl: elbows behind the torso, no swing','Pushdown: elbows locked at your sides','Full lockout and full stretch on both','Run the two back to back, no rest between']},
 ]},
 ];
@@ -704,7 +790,7 @@ const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearT
 /* We never count down by decrementing. We store an absolute end timestamp and
    derive remaining time from the system clock, so freezing/closing the app
    cannot desynchronise it. */
-let T={total:0,endAt:0,pausedLeft:null,run:false,iv:null,label:''};
+let T={total:0,endAt:0,pausedLeft:null,run:false,iv:null,label:'',exid:null,si:null};
 let lastTick=null, AC=null;
 const TKEY='rp-timer-v1';
 
@@ -778,22 +864,73 @@ function clearPulse(){
 function ovlShow(n){
   const o=OVL();
   o.classList.add('on','flash');o.classList.remove('go');
+  document.getElementById('ovlGo').innerHTML='';
   document.getElementById('ovlLbl').textContent='Rest ending';
   document.getElementById('ovlNum').textContent=n;
   document.getElementById('ovlSub').textContent=T.label||'Next set coming up';
 }
+/* ---- what you are about to do, worked out from the set you just rested from ---- */
+function nextUp(){
+  const day=PROG[dayIdx]; if(!day)return null;
+  const list=day.ex.filter(vis);
+  let ex=T.exid?list.find(e=>e.id===T.exid):null;
+  let si=(T.si==null?null:T.si+1);
+  if(ex){
+    const sets=setsOf(ex);
+    if(si!=null&&si<sets.length)return {ex,si,sets};        // another set of the same lift
+  }
+  const from=ex?list.indexOf(ex):-1;                       // that lift is finished
+  const nx=list.slice(from+1).find(e=>!isDone(e))||list.find(e=>!isDone(e));
+  if(!nx)return null;
+  return {ex:nx,si:0,sets:setsOf(nx),moved:true};
+}
 function ovlGo(){
   const o=OVL();
   o.classList.remove('flash');o.classList.add('on','go');
-  document.getElementById('ovlLbl').textContent='Rest complete';
-  document.getElementById('ovlNum').textContent='GO';
-  document.getElementById('ovlSub').textContent=T.label||'';
-  clearTimeout(o._h);o._h=setTimeout(ovlHide,1400);   // straight back to the workout
+  const n=nextUp();
+  const g=document.getElementById('ovlGo');
+
+  if(!n){
+    g.innerHTML=`<div class="gmid"><div class="gcue">Day complete</div>
+      <div class="greps" style="margin-top:18px">Tap finish to log it</div></div>
+      <div class="gfoot"><span class="gtap">Tap anywhere</span></div>`;
+  }else{
+    const {ex,si,sets,moved}=n, st=sets[si];
+    /* carry the weight you actually used on this lift today, else the prescription */
+    const logged=(cur[ex.id]||[]).filter(x=>x&&x.w!=null).map(x=>x.w);
+    const w=(!moved&&logged.length)?logged[logged.length-1]:st.w;
+    const unit=ex.wu||'kg';
+    const pips=sets.map((_,k)=>`<i class="${k<si?'did':k===si?'now':''}"></i>`).join('');
+    const one=sets.length===1;
+    const label=one?(ex.rl||'reps')
+              :(st.l==='TOP'?'Top set'
+              :(si===sets.length-1?'Last set':`Set ${si+1} of ${sets.length}`));
+    const cue=(ex.cue||'').split('|').join('<em>/</em>');
+    const tempo=ex.tl?`${ex.tempo}`:`Tempo ${ex.tempo}`;
+    const rir=/RPE|fresh/i.test(ex.rir)?ex.rir:`${ex.rir} RIR`;
+    g.innerHTML=`
+     <div class="pips">${one?'':pips}</div>
+     <div class="gmid">
+       <div class="gcue">${cue}</div>
+       <div>
+         <div class="gnum">${w!=null?`${w}<u>${unit}</u><s>×</s>`:''}${st.r}</div>
+         <div class="greps">${label}${(w==null&&!one&&ex.rl)?' · '+ex.rl:''}</div>
+       </div>
+     </div>
+     <div class="gex">${moved?'Next · ':''}${ex.n}</div>
+     <div class="gmeta"><span>${tempo}</span><span>${rir}</span></div>
+     <div class="gfoot"><span class="gtap">Tap anywhere</span></div>`;
+    if(moved)liveId=ex.id;
+  }
+  clearTimeout(o._h);   // stays up until you tap it
 }
 function ovlHide(){const o=OVL();o.classList.remove('on','flash','go');clearTimeout(o._h);
   if(typeof armRecenter==='function')armRecenter();}
 document.getElementById('ovlX').onclick=ovlHide;
-OVL().onclick=e=>{if(e.target.id==='ovl')ovlHide()};
+OVL().onclick=e=>{
+  if(OVL().classList.contains('go')){ovlHide();return}   // go screen: tap anywhere
+  if(e.target.id==='ovl')ovlHide();
+};
 function tShow(){
   const left=tLeft();
   const m=Math.floor(left/60),s=left%60;
@@ -819,7 +956,7 @@ function loop(){
     if(left!==lastTick){
       if(left<=0){
         lastTick=0;T.run=false;T.pausedLeft=0;clearInterval(T.iv);
-        beep();goPulse();notify();saveTimer();tShow();return;
+        beep();goPulse();notify();ovlGo();saveTimer();tShow();return;
       }
       if(left<=10){warnPulse(left);tick()}
       lastTick=left;
@@ -827,9 +964,10 @@ function loop(){
     tShow();
   },250);
 }
-function tStart(sec,label){
+function tStart(sec,label,exid,si){
   clearInterval(T.iv);ovlHide();
   T.total=sec;T.endAt=Date.now()+sec*1000;T.pausedLeft=null;T.run=true;T.label=label;
+  if(exid!==undefined){T.exid=exid;T.si=(si==null?null:+si)}
   lastTick=null;
   $('#tdisp').classList.remove('idle');
   $('#tl1').textContent='Resting';$('#tl2').textContent=label;
@@ -840,14 +978,14 @@ function tStart(sec,label){
 $('#tTog').onclick=()=>{
   if(!T.total){toast('Tap a set’s rest button first');return}
   const left=tLeft();
-  if(left<=0){tStart(T.total,T.label);return}          // restart finished timer
+  if(left<=0){tStart(T.total,T.label,T.exid,T.si);return}   // restart finished timer
   if(T.run){ T.run=false;T.pausedLeft=left;clearInterval(T.iv);ovlHide();
              document.getElementById('timer').classList.remove('flash'); }
   else { T.run=true;T.endAt=Date.now()+(T.pausedLeft||0)*1000;T.pausedLeft=null;lastTick=null;loop(); }
   saveTimer();tShow();
 };
 $('#tAdd').onclick=()=>{
-  if(!T.total){tStart(60,'Custom rest');return}
+  if(!T.total){tStart(60,'Custom rest',null,null);return}
   T.total+=30;
   if(T.run){T.endAt+=30000}else{T.pausedLeft=(T.pausedLeft||0)+30}
   if(tLeft()>10){ovlHide();clearPulse();}
@@ -1124,7 +1262,7 @@ function render(){
         <input type="number" inputmode="numeric" placeholder="${s.r}"
           data-ex="${ex.id}" data-i="${i}" data-f="r" value="${v.r??''}" class="${v.r?'filled':''}">
 
-        <button class="rest" data-rest="${s.rest}" data-lbl="${ex.n} · set ${s.l}">${s.rest}s</button>
+        <button class="rest" data-rest="${s.rest}" data-lbl="${ex.n} · set ${s.l}" data-exid="${ex.id}" data-si="${i}">${s.rest}s</button>
       </div>`;
     }).join('');
     const diff=list.length-ex.sets.length;          // + added, − removed
@@ -1173,7 +1311,10 @@ function render(){
       armRecenter();
     };
   });
-  document.querySelectorAll('.rest').forEach(b=>b.onclick=()=>tStart(+b.dataset.rest,b.dataset.lbl));
+  document.querySelectorAll('.rest').forEach(b=>b.onclick=()=>{
+    liveId=b.dataset.exid;
+    tStart(+b.dataset.rest,b.dataset.lbl,b.dataset.exid,b.dataset.si);
+  });
   document.querySelectorAll('[data-info]').forEach(el=>el.onclick=(e)=>{
     e.preventDefault();e.stopPropagation();openInfo(el.dataset.info);
   });
@@ -1259,7 +1400,7 @@ function armAutoRest(inp){
     if(inp.value==='')return;
     if(T.run&&T.endAt&&T.endAt-Date.now()>2000)return;    // a timer is already running
     inp.blur();                                           // drop the keyboard
-    tStart(sec,btn.dataset.lbl);
+    tStart(sec,btn.dataset.lbl,btn.dataset.exid,btn.dataset.si);
   },1400);                                                // wait until you've stopped typing
 }
 
