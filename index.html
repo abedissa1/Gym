@@ -991,7 +991,12 @@ function openEdit(i){
   else{ wf.style.display=''; $('#edWL').textContent=ex.wl||('Weight · '+unitOf(ex)); }
   $('#edRL').textContent=ex.rl||'Reps';
   $('#edW').value=v.w!=null?v.w:'';
-  $('#edR').value=(v.r!=null?String(v.r).replace(/[^0-9.]/g,''):'');
+  /* Reps are prefilled only for the set you are on or one already logged.
+     Adjusting a later set's weight ahead of time must not mark it as done. */
+  const live=(i===nowSet(ex))||setDone(ex,i);
+  const reps=String(v.r??'').replace(/[^0-9.]/g,'');
+  $('#edR').value=live?reps:'';
+  $('#edR').placeholder=reps;
   const ed=$('#edit');
   ed.classList.add('on');
   void ed.offsetHeight;                       // lay it out before we focus
@@ -1003,12 +1008,17 @@ function closeEdit(){$('#edit').classList.remove('on');edCtx=null}
 function commitEdit(){
   if(!edCtx)return;
   const {exid,i}=edCtx;
+  const ex=curEx();
+  /* saving the set you are actually on means you just finished it, so rest starts */
+  const live=!!ex && ex.id===exid && i===nowSet(ex) && !setDone(ex,i);
   const w=$('#edW').value===''?null:parseFloat($('#edW').value);
   const r=$('#edR').value===''?null:parseFloat($('#edR').value);
   cur[exid]=cur[exid]||[];cur[exid][i]=cur[exid][i]||{};
   if(w!=null)cur[exid][i].w=w; else delete cur[exid][i].w;
   if(r!=null)cur[exid][i].r=r; else delete cur[exid][i].r;
-  saveDraft();closeEdit();render();
+  saveDraft();closeEdit();
+  if(live && r!=null){ playSet(i); return; }   // straight into the rest clock
+  render();
 }
 
 /* ================== TECHNIQUE SHEET ================== */
